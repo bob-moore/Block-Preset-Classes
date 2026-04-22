@@ -49,8 +49,7 @@ use Bmd\BlockPresetClasses;
 
 $plugin = new BlockPresetClasses();
 
-add_action( 'enqueue_block_editor_assets', [ $plugin, 'enqueueEditorScript' ] );
-add_action( 'rest_api_init', [ $plugin, 'registerRestRoute' ] );
+$plugin->mount()
 ```
 
 ## Registering Presets
@@ -135,6 +134,12 @@ npm run plugin-zip
 ```
 
 ## Changelog
+
+### 0.1.1
+
+- Added `mount()` method to class that registers all WordPress hooks in one call
+- Simplified plugin bootstrap: replaced individual `add_action`/`add_filter` calls with `$plugin->mount()`.
+- When using the library via Composer, call `$plugin->mount()` after instantiation instead of wiring hooks manually.
 
 ### 0.1.0
 
