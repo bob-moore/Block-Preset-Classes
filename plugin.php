@@ -5,7 +5,7 @@
  * Author:            Bob Moore
  * Author URI:        https://www.bobmoore.dev
  * Description:       Adds configurable preset classes to Gutenberg blocks.
- * Version:           0.1.1
+ * Version:           0.2.0
  * Requires at least: 6.7
  * Tested up to:      6.7
  * Requires PHP:      8.2
@@ -24,10 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-/**
- * All plugin functionality is contained in this class so it can be consumed
- * through Composer without automatically registering WordPress hooks.
- */
-$plugin = new BlockPresetClasses();
+function create_block_preset_classes_plugin(): void
+{
+	$plugin = new BlockPresetClasses(
+		plugin_dir_url( __FILE__ ),
+		plugin_dir_path( __FILE__ )
+	);
 
-$plugin->mount();
+	$plugin->mount();
+}
+create_block_preset_classes_plugin();

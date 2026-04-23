@@ -37,11 +37,10 @@
 		"typescript": "^5.9.3",
 		"webpack-remove-empty-scripts": "^1.1.1"
 	},
-	"files": [ 
-		"block-preset-classes.php",
+	"files": [
+		"plugin.php",
 		"build",
 		"vendor",
-		"Plugin.php",
 		"readme.txt",
 		"inc"
 	]

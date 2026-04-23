@@ -47,9 +47,12 @@ It provides:
 
 use Bmd\BlockPresetClasses;
 
-$plugin = new BlockPresetClasses();
+$plugin = new BlockPresetClasses(
+    plugin_dir_url( __FILE__ ),
+    plugin_dir_path( __FILE__ )
+);
 
-$plugin->mount()
+$plugin->mount();
 ```
 
 ## Registering Presets
@@ -134,6 +137,14 @@ npm run plugin-zip
 ```
 
 ## Changelog
+
+### 0.2.0
+
+- Added `BasicPlugin` interface (`inc/BasicPlugin.php`) with `mount()`, `setUrl()`, `setPath()`.
+- Refactored `BlockPresetClasses` to implement `BasicPlugin` with injected URL and path.
+- `buildPath` and `buildUrl` now pass through `block_preset_classes_plugin_path` / `block_preset_classes_plugin_url` filters for integrator overrides.
+- Updated plugin bootstrap to a named function `create_block_preset_classes_plugin()`.
+- Removed hardcoded `"version"` from `composer.json`; version is now read from git tags.
 
 ### 0.1.1
 

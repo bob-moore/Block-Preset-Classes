@@ -18,24 +18,29 @@ use WP_Block_Type_Registry;
 /**
  * Service class for block preset classes.
  */
-class BlockPresetClasses
+class BlockPresetClasses implements BasicPlugin
 {
 	/**
-	 * Mount actions required
+	 * URL of this plugin/package.
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function mount(): void
-	{
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorScript' ] );
-		add_action( 'rest_api_init', [ $this, 'registerRestRoute' ] );
-	}
+	protected string $url;
+
+	/**
+	 * Path of this plugin/package.
+	 *
+	 * @var string
+	 */
+	protected string $path;
+
 	/**
 	 * WordPress block registry.
 	 *
 	 * @var WP_Block_Type_Registry
 	 */
 	protected WP_Block_Type_Registry $block_registry;
+
 	/**
 	 * Array of block presets.
 	 *
@@ -60,11 +65,53 @@ class BlockPresetClasses
 	/**
 	 * Constructor.
 	 *
+	 * @param string                 $url            URL to the plugin directory.
+	 * @param string                 $path           Absolute path to the plugin directory.
 	 * @param WP_Block_Type_Registry|null $block_registry The block registry.
 	 */
-	public function __construct( ?WP_Block_Type_Registry $block_registry = null )
-	{
+	public function __construct(
+		string $url = '',
+		string $path = '',
+		?WP_Block_Type_Registry $block_registry = null
+	) {
+		$this->setUrl( ! empty( $url ) ? esc_url_raw( $url ) : plugin_dir_url( __DIR__ ) );
+		$this->setPath( ! empty( $path ) ? esc_html( $path ) : plugin_dir_path( __DIR__ ) );
 		$this->block_registry = $block_registry ?? WP_Block_Type_Registry::get_instance();
+	}
+
+	/**
+	 * Setter for the URL property.
+	 *
+	 * @param string $url string URL to set.
+	 *
+	 * @return void
+	 */
+	public function setUrl( string $url ): void
+	{
+		$this->url = trailingslashit( $url );
+	}
+
+	/**
+	 * Setter for the path property.
+	 *
+	 * @param string $path string path to set.
+	 *
+	 * @return void
+	 */
+	public function setPath( string $path ): void
+	{
+		$this->path = trailingslashit( $path );
+	}
+
+	/**
+	 * Mount actions required.
+	 *
+	 * @return void
+	 */
+	public function mount(): void
+	{
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorScript' ] );
+		add_action( 'rest_api_init', [ $this, 'registerRestRoute' ] );
 	}
 
 	/**
@@ -80,9 +127,9 @@ class BlockPresetClasses
 			return;
 		}
 
-		$assets = $this->getScriptAssets();
+		$assets  = $this->getScriptAssets();
 		$version = $assets['version'] ?? (string) filemtime( $script_file );
-		$src = $this->buildUrl( 'index.js' );
+		$src     = $this->buildUrl( 'index.js' );
 
 		if ( empty( $src ) ) {
 			return;
@@ -115,9 +162,10 @@ class BlockPresetClasses
 			return;
 		}
 
-		$assets = $this->getScriptAssets();
+		$assets  = $this->getScriptAssets();
+		// Keep style versions in sync with script build versions when available.
 		$version = $assets['version'] ?? (string) filemtime( $style_file );
-		$src = $this->buildUrl( $relative_path );
+		$src     = $this->buildUrl( $relative_path );
 
 		if ( empty( $src ) ) {
 			return;
@@ -140,9 +188,13 @@ class BlockPresetClasses
 	 */
 	protected function buildPath( string $relative_path ): string
 	{
-		return wp_normalize_path(
-			dirname( __DIR__ ) . '/build/' . ltrim( $relative_path, '/' )
-		);
+		$path = apply_filters( 'block_preset_classes_plugin_path', $this->path );
+
+		if ( '' === $path ) {
+			return '';
+		}
+
+		return wp_normalize_path( $path . 'build/' . ltrim( $relative_path, '/' ) );
 	}
 
 	/**
@@ -154,36 +206,13 @@ class BlockPresetClasses
 	 */
 	protected function buildUrl( string $relative_path ): string
 	{
-		$absolute_path = $this->buildPath( $relative_path );
-		$resolved_path = realpath( $absolute_path );
+		$url = apply_filters( 'block_preset_classes_plugin_url', $this->url );
 
-		if ( false !== $resolved_path ) {
-			$absolute_path = wp_normalize_path( $resolved_path );
+		if ( '' === $url ) {
+			return '';
 		}
 
-		$content_dir = wp_normalize_path( WP_CONTENT_DIR );
-
-		if ( str_starts_with( $absolute_path, $content_dir ) ) {
-			$relative = ltrim(
-				substr( $absolute_path, strlen( $content_dir ) ),
-				'/'
-			);
-
-			return content_url( $relative );
-		}
-
-		$root_dir = wp_normalize_path( ABSPATH );
-
-		if ( str_starts_with( $absolute_path, $root_dir ) ) {
-			$relative = ltrim(
-				substr( $absolute_path, strlen( $root_dir ) ),
-				'/'
-			);
-
-			return site_url( $relative );
-		}
-
-		return '';
+		return $url . 'build/' . ltrim( $relative_path, '/' );
 	}
 
 	/**
@@ -210,17 +239,17 @@ class BlockPresetClasses
 			}
 
 			$dependencies = $asset['dependencies'] ?? [];
-			$version = $asset['version'] ?? null;
+			$version      = $asset['version'] ?? null;
 
 			return [
 				'dependencies' => is_array( $dependencies ) ? $dependencies : [],
-				'version' => is_string( $version ) ? $version : null,
+				'version'      => is_string( $version ) ? $version : null,
 			];
 		}
 
 		return [
 			'dependencies' => [],
-			'version' => null,
+			'version'      => null,
 		];
 	}
 
@@ -273,7 +302,7 @@ class BlockPresetClasses
 	public function addBlockPreset( string $block_name, string $label, string $value = '' ): void
 	{
 		$block_name = trim( $block_name );
-		$label = trim( $label );
+		$label      = trim( $label );
 
 		if ( '' === $block_name || '' === $label ) {
 			return;

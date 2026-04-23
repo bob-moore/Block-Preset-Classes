@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 6.7
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -72,7 +72,25 @@ Yes. Use the `bmd.blockPresets.classOptions` filter. It receives:
 * blockName
 * blockAttributes
 
+= Can I use this as a Composer dependency? =
+
+Yes. Require the package, then instantiate and call `mount()`:
+
+`$plugin = new BlockPresetClasses(`
+`    plugin_dir_url( __FILE__ ),`
+`    plugin_dir_path( __FILE__ )`
+`);`
+`$plugin->mount();`
+
 == Changelog ==
+
+= 0.2.0 =
+
+* Added `BasicPlugin` interface with `mount()`, `setUrl()`, `setPath()`.
+* Refactored `BlockPresetClasses` to implement `BasicPlugin` with injected URL and path.
+* `buildPath` / `buildUrl` now pass through `block_preset_classes_plugin_path` / `block_preset_classes_plugin_url` filters.
+* Plugin bootstrap now uses a named function `create_block_preset_classes_plugin()`.
+* Removed hardcoded version from `composer.json`.
 
 = 0.1.0 =
 
@@ -82,6 +100,10 @@ Yes. Use the `bmd.blockPresets.classOptions` filter. It receives:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.2.0 =
+
+Structural refactor. If using as a Composer library, update instantiation to pass `plugin_dir_url( __FILE__ )` and `plugin_dir_path( __FILE__ )` to the constructor and call `$plugin->mount()`.
 
 = 0.1.0 =
 

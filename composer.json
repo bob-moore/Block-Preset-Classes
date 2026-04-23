@@ -2,7 +2,6 @@
     "name": "bmd/block-preset-classes",
     "description": "Extension to add preset classes to wordpress blocks.",
     "type": "library",
-    "version": "0.1.1",
     "author": "Bob Moore <bob@bobmoore.dev>",
     "homepage": "https://github.com/bob-moore/Block-Preset-Classes",
     "license": "GPL-2.0-or-later",
