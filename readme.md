@@ -32,7 +32,7 @@ It provides:
 ### As a WordPress plugin
 
 1. Build production assets (`npm run build`).
-2. Package the plugin (`npm run plugin-zip`) or zip the plugin directory.
+2. Package the plugin (`npm run zip`) or zip the plugin directory.
 3. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
 4. Upload the ZIP and activate Block Preset Classes.
 
@@ -133,10 +133,16 @@ npm run build
 Create plugin ZIP:
 
 ```bash
-npm run plugin-zip
+npm run zip
 ```
 
 ## Changelog
+
+### 0.3.0
+
+- Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.
+- Added `wpify/scoper` configuration and tracked scoped lock files for reproducible releases.
+- Standardized release packaging on `npm run zip`.
 
 ### 0.2.1
 

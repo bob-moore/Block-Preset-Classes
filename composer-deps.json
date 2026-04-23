@@ -1,0 +1,13 @@
+{
+    "name": "bmd/block-preset-classes-scoped-deps",
+    "description": "Scoped runtime dependencies for Block Preset Classes.",
+    "type": "project",
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    },
+    "require": {
+        "bmd/github-wp-updater": "^0.1.2"
+    }
+}

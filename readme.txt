@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 6.7
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ Features include:
 == Installation ==
 
 1. Build assets with `npm run build`.
-2. Package with `npm run plugin-zip` or zip the plugin folder.
+2. Package with `npm run zip` or zip the plugin folder.
 3. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
 4. Upload and activate Block Preset Classes.
 
@@ -84,6 +84,12 @@ Yes. Require the package, then instantiate and call `mount()`:
 
 == Changelog ==
 
+= 0.3.0 =
+
+* Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.
+* Added `wpify/scoper` configuration and tracked scoped lock files for reproducible releases.
+* Standardized release packaging on `npm run zip`.
+
 = 0.2.1 =
 
 * Added GitHub updater integration for release-based plugin updates.
@@ -105,6 +111,10 @@ Yes. Require the package, then instantiate and call `mount()`:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.0 =
+
+Moves the updater to a scoped Composer dependency and refreshes the release packaging workflow.
 
 = 0.2.1 =
 
