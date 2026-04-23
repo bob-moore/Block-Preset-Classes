@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 6.7
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,11 @@ Yes. Require the package, then instantiate and call `mount()`:
 
 == Changelog ==
 
+= 0.2.1 =
+
+* Added GitHub updater integration for release-based plugin updates.
+* Packaged release now includes updater dependency via Composer install.
+
 = 0.2.0 =
 
 * Added `BasicPlugin` interface with `mount()`, `setUrl()`, `setPath()`.
@@ -100,6 +105,10 @@ Yes. Require the package, then instantiate and call `mount()`:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.2.1 =
+
+Adds GitHub release update support for installed copies of the plugin.
 
 = 0.2.0 =
 

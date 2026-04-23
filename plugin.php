@@ -5,7 +5,7 @@
  * Author:            Bob Moore
  * Author URI:        https://www.bobmoore.dev
  * Description:       Adds configurable preset classes to Gutenberg blocks.
- * Version:           0.2.0
+ * Version:           0.2.1
  * Requires at least: 6.7
  * Tested up to:      6.7
  * Requires PHP:      8.2
@@ -17,12 +17,27 @@
  */
 
 use Bmd\BlockPresetClasses;
+use Bmd\GithubWpUpdater;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
+
+function initialize_block_preset_classes_updater(): void
+{
+	$updater = new GithubWpUpdater(
+		__FILE__,
+		[
+			'github.user'   => 'bob-moore',
+			'github.repo'   => 'Block-Preset-Classes',
+			'github.branch' => 'main',
+		]
+	);
+
+	$updater->mount();
+}
 
 function create_block_preset_classes_plugin(): void
 {
@@ -33,4 +48,6 @@ function create_block_preset_classes_plugin(): void
 
 	$plugin->mount();
 }
+
+initialize_block_preset_classes_updater();
 create_block_preset_classes_plugin();

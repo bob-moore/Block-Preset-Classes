@@ -138,6 +138,11 @@ npm run plugin-zip
 
 ## Changelog
 
+### 0.2.1
+
+- Added GitHub updater integration so plugin installs can detect new releases from this repository.
+- Packaged release now includes the updater dependency installed from Composer.
+
 ### 0.2.0
 
 - Added `BasicPlugin` interface (`inc/BasicPlugin.php`) with `mount()`, `setUrl()`, `setPath()`.

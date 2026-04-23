@@ -1,6 +1,6 @@
 {
 	"name": "block-preset-classes",
-	"version": "0.1.0",
+	"version": "0.2.1",
 	"description": "Adds configurable preset classes to Gutenberg blocks.",
 	"author": "Bob Moore",
 	"license": "GPL-2.0-or-later",

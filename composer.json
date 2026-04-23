@@ -23,7 +23,9 @@
             "Bmd\\": "./inc"
         }
     },
-    "require": {},
+    "require": {
+        "bmd/github-wp-updater": "^0.1.2"
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
         "symfony/var-dumper": "*",
