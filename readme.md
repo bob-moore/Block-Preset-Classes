@@ -130,32 +130,6 @@ addFilter(
 - Method: `GET`
 - Auth: Public (permission callback returns true)
 
-## Development
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start development build:
-
-```bash
-npm run start
-```
-
-Create production assets:
-
-```bash
-npm run build
-```
-
-Create plugin ZIP:
-
-```bash
-npm run zip
-```
-
 ## Changelog
 
 ### 0.3.0
