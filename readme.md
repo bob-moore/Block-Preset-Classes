@@ -1,10 +1,30 @@
 # Block Preset Classes
 
-Block Preset Classes adds reusable class presets to Gutenberg blocks through a lightweight editor extension and REST-backed option provider.
+Block styles are useful… until you need more than one.
 
-## Overview
+By default, WordPress only lets you apply a single block style at a time. That means if you want combinations (padding + border + background), you end up creating a bunch of nearly identical styles just to cover every variation.
 
-This plugin is built for WordPress projects that want editorially friendly class presets without creating custom block variations for every styling use case.
+This plugin solves that.
+
+What it does
+
+Block Preset Classes lets you define reusable presets (CSS classes) and apply multiple of them to a block.
+
+Instead of picking one style, you can stack presets and mix them however you want.
+
+Under the hood, it simply adds those classes to the block’s Additional CSS Classes field — the same way block styles work, just without the one-style limit.
+
+Why use it
+	•	Avoid creating dozens of redundant block styles
+	•	Mix and match design options freely
+	•	Keep your CSS simple and scalable
+
+How it works
+	1.	Define your preset classes
+	2.	Select them in the editor
+	3.	Classes get added to the block
+
+That’s it. No magic — just classes.
 
 It provides:
 
