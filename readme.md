@@ -1,5 +1,12 @@
 # Block Preset Classes
 
+![Version](https://img.shields.io/badge/version-0.3.1-blue)
+![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-3858e9?logo=wordpress&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)
+![License](https://img.shields.io/badge/license-GPL--2.0--or--later-green)
+![Lint and Build](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-build.yml/badge.svg)
+[![Try it in the WordPress Playground](https://img.shields.io/badge/Try_in_Playground-v0.3.1-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
+
 Block styles are useful… until you need more than one.
 
 By default, WordPress only lets you apply a single block style at a time. That means if you want combinations (padding + border + background), you end up creating a bunch of nearly identical styles just to cover every variation.

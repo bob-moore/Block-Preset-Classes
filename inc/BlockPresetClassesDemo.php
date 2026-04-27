@@ -99,8 +99,7 @@ class BlockPresetClassesDemo implements BasicPlugin
 	public function mount(): void
 	{
 		add_filter( 'block_preset_classes', [ $this, 'registerDemoPresets' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueDemoStyles' ] );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueDemoStyles' ] );
+		add_action( 'enqueue_block_assets', [ $this, 'enqueueDemoStyles' ] );
 	}
 
 	/**

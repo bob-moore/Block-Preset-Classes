@@ -1,6 +1,6 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
-	"landingPage": "/block-preset-classes-demo/",
+	"landingPage": "/wp-admin/post.php?post=10&action=edit",
 	"login": true,
 	"features": {
 		"networking": true
