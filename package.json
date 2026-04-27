@@ -1,6 +1,6 @@
 {
 	"name": "block-preset-classes",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Adds configurable preset classes to Gutenberg blocks.",
 	"author": "Bob Moore",
 	"license": "GPL-2.0-or-later",
@@ -16,7 +16,6 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --experimental-modules"
 	},
 	"devDependencies": {
@@ -41,7 +40,14 @@
 	"files": [
 		"plugin.php",
 		"build",
+		"!build/*.map",
 		"vendor",
+		"!vendor/**/tests",
+		"!vendor/**/tests/**",
+		"!vendor/**/*.code-workspace",
+		"!vendor/**/phpcs.xml",
+		"!vendor/**/phpstan.neon",
+		"!vendor/**/phpunit.xml",
 		"readme.txt",
 		"inc"
 	]

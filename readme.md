@@ -132,6 +132,12 @@ addFilter(
 
 ## Changelog
 
+### 0.3.1
+
+- Added PHPUnit coverage with WP_Mock.
+- Added WordPress Playground demo content and sample preset registration.
+- Added GitHub Actions lint, build, and PHP test workflow.
+
 ### 0.3.0
 
 - Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.

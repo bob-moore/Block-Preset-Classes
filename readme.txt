@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 6.7
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,12 @@ Yes. Require the package, then instantiate and call `mount()`:
 
 == Changelog ==
 
+= 0.3.1 =
+
+* Added PHPUnit coverage with WP_Mock.
+* Added WordPress Playground demo content and sample preset registration.
+* Added GitHub Actions lint, build, and PHP test workflow.
+
 = 0.3.0 =
 
 * Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.
@@ -111,6 +117,10 @@ Yes. Require the package, then instantiate and call `mount()`:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.1 =
+
+Adds test coverage, CI, and a Playground demo with sample presets.
 
 = 0.3.0 =
 
