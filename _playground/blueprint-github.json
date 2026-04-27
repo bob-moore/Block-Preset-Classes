@@ -1,0 +1,40 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/block-preset-classes-demo/",
+	"login": true,
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "updateUserMeta",
+			"meta": {
+				"admin_color": "modern",
+				"show_welcome_panel": 0
+			},
+			"userId": 1
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Block Preset Classes",
+				"permalink_structure": "/%postname%/",
+				"block_preset_classes_load_demo": 1
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "url",
+				"url": "https://github.com/bob-moore/Block-Preset-Classes/releases/latest/download/block-preset-classes.zip"
+			}
+		},
+		{
+			"step": "importWxr",
+			"file": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/demo-content.xml"
+			}
+		}
+	]
+}

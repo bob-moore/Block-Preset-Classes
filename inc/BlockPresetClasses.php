@@ -65,8 +65,8 @@ class BlockPresetClasses implements BasicPlugin
 	/**
 	 * Constructor.
 	 *
-	 * @param string                 $url            URL to the plugin directory.
-	 * @param string                 $path           Absolute path to the plugin directory.
+	 * @param string                      $url            URL to the plugin directory.
+	 * @param string                      $path           Absolute path to the plugin directory.
 	 * @param WP_Block_Type_Registry|null $block_registry The block registry.
 	 */
 	public function __construct(

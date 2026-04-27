@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:wp="http://wordpress.org/export/1.2/"
+>
+<channel>
+	<title>Block Preset Classes</title>
+	<link>https://example.com</link>
+	<description></description>
+	<pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+	<language>en-US</language>
+	<wp:wxr_version>1.2</wp:wxr_version>
+	<wp:base_site_url>https://example.com</wp:base_site_url>
+	<wp:base_blog_url>https://example.com</wp:base_blog_url>
+	<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[admin]]></wp:author_login><wp:author_email><![CDATA[wordpress@example.com]]></wp:author_email><wp:author_display_name><![CDATA[admin]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
+	<generator>https://wordpress.org/?v=6.7</generator>
+
+	<item>
+		<title><![CDATA[Editorial Workspace]]></title>
+		<link>https://example.com/?attachment_id=20</link>
+		<pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://picsum.photos/seed/block-preset-editorial/1200/800</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>20</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-27 00:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-27 00:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[editorial-workspace]]></wp:post_name>
+		<wp:status><![CDATA[inherit]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[attachment]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:attachment_url><![CDATA[https://picsum.photos/seed/block-preset-editorial/1200/800]]></wp:attachment_url>
+		<wp:postmeta><wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key><wp:meta_value><![CDATA[2026/04/editorial-workspace.jpg]]></wp:meta_value></wp:postmeta>
+		<wp:postmeta><wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key><wp:meta_value><![CDATA[a:5:{s:5:"width";i:1200;s:6:"height";i:800;s:4:"file";s:33:"2026/04/editorial-workspace.jpg";s:5:"sizes";a:0:{}s:10:"image_meta";a:0:{}}]]></wp:meta_value></wp:postmeta>
+	</item>
+
+	<item>
+		<title><![CDATA[Design Systems Desk]]></title>
+		<link>https://example.com/?attachment_id=21</link>
+		<pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://picsum.photos/seed/block-preset-system/1200/800</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>21</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-27 00:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-27 00:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[design-systems-desk]]></wp:post_name>
+		<wp:status><![CDATA[inherit]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[attachment]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:attachment_url><![CDATA[https://picsum.photos/seed/block-preset-system/1200/800]]></wp:attachment_url>
+		<wp:postmeta><wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key><wp:meta_value><![CDATA[2026/04/design-systems-desk.jpg]]></wp:meta_value></wp:postmeta>
+		<wp:postmeta><wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key><wp:meta_value><![CDATA[a:5:{s:5:"width";i:1200;s:6:"height";i:800;s:4:"file";s:34:"2026/04/design-systems-desk.jpg";s:5:"sizes";a:0:{}s:10:"image_meta";a:0:{}}]]></wp:meta_value></wp:postmeta>
+	</item>
+
+	<item>
+		<title><![CDATA[Design Notes for Reusable Blocks]]></title>
+		<link>https://example.com/?p=11</link>
+		<pubDate>Mon, 06 Apr 2026 12:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://example.com/?p=11</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:paragraph {"className":"has-preset-lead-text"} -->
+<p class="has-preset-lead-text">Preset classes let editorial teams apply approved visual treatments without memorizing class names.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This post has a featured image so the query loop can show a mixed set of real content.</p>
+<!-- /wp:paragraph -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[Preset classes let editorial teams apply approved visual treatments without memorizing class names.]]></excerpt:encoded>
+		<wp:post_id>11</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-06 12:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-06 12:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-06 12:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-06 12:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[open]]></wp:ping_status>
+		<wp:post_name><![CDATA[design-notes-for-reusable-blocks]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[post]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta><wp:meta_key><![CDATA[_thumbnail_id]]></wp:meta_key><wp:meta_value><![CDATA[20]]></wp:meta_value></wp:postmeta>
+	</item>
+
+	<item>
+		<title><![CDATA[Choosing Helpful Presets]]></title>
+		<link>https://example.com/?p=12</link>
+		<pubDate>Mon, 13 Apr 2026 12:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://example.com/?p=12</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:group {"className":"has-preset-callout-panel","layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-preset-callout-panel"><!-- wp:paragraph -->
+<p>Good presets describe intent: lead text, callout panel, feature card, or ribbon edge.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[Good presets describe intent: lead text, callout panel, feature card, or ribbon edge.]]></excerpt:encoded>
+		<wp:post_id>12</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-13 12:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-13 12:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-13 12:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-13 12:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[open]]></wp:ping_status>
+		<wp:post_name><![CDATA[choosing-helpful-presets]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[post]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+	</item>
+
+	<item>
+		<title><![CDATA[Keeping Editors in Flow]]></title>
+		<link>https://example.com/?p=13</link>
+		<pubDate>Mon, 20 Apr 2026 12:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://example.com/?p=13</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:paragraph {"className":"has-preset-accent-note"} -->
+<p class="has-preset-accent-note">The panel appears only when presets exist for the selected block.</p>
+<!-- /wp:paragraph -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[The panel appears only when presets exist for the selected block.]]></excerpt:encoded>
+		<wp:post_id>13</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-20 12:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-20 12:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-20 12:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-20 12:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[open]]></wp:ping_status>
+		<wp:post_name><![CDATA[keeping-editors-in-flow]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[post]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta><wp:meta_key><![CDATA[_thumbnail_id]]></wp:meta_key><wp:meta_value><![CDATA[21]]></wp:meta_value></wp:postmeta>
+	</item>
+
+	<item>
+		<title><![CDATA[Classes Still Belong to the Theme]]></title>
+		<link>https://example.com/?p=14</link>
+		<pubDate>Mon, 27 Apr 2026 12:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://example.com/?p=14</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:paragraph -->
+<p>The plugin stores class selections. The site or theme decides what those classes look like.</p>
+<!-- /wp:paragraph -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[The plugin stores class selections. The site or theme decides what those classes look like.]]></excerpt:encoded>
+		<wp:post_id>14</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-27 12:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-27 12:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-27 12:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-27 12:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[open]]></wp:ping_status>
+		<wp:post_name><![CDATA[classes-still-belong-to-the-theme]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[post]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+	</item>
+
+	<item>
+		<title><![CDATA[Block Preset Classes Demo]]></title>
+		<link>https://example.com/?page_id=10</link>
+		<pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">https://example.com/?page_id=10</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:group {"className":"has-preset-feature-card has-preset-soft-shadow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-preset-feature-card has-preset-soft-shadow"><!-- wp:heading {"className":"has-preset-accent-heading"} -->
+<h2 class="wp-block-heading has-preset-accent-heading">Block Preset Classes</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"has-preset-lead-text"} -->
+<p class="has-preset-lead-text">This demo registers sample preset options through the <code>block_preset_classes</code> filter, then applies the saved classes to ordinary core blocks.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"has-preset-accent-note"} -->
+<p class="has-preset-accent-note">Open this page in the editor and select the heading, paragraph, or group blocks to see the Block Presets panel.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"has-preset-callout-panel has-preset-ribbon-edge","layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-preset-callout-panel has-preset-ribbon-edge"><!-- wp:paragraph -->
+<p>The plugin does not force a design system. It gives teams a clean way to expose approved CSS classes in the block editor.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":1,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"exclude","inherit":false}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":2}} -->
+<!-- wp:group {"className":"has-preset-feature-card","layout":{"type":"constrained"}} -->
+<div class="wp-block-group has-preset-feature-card"><!-- wp:post-featured-image {"aspectRatio":"16/9"} /-->
+
+<!-- wp:post-title {"isLink":true,"className":"has-preset-accent-heading"} /-->
+
+<!-- wp:post-excerpt /--></div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>10</wp:post_id>
+		<wp:post_date><![CDATA[2026-04-27 00:00:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-04-27 00:00:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-04-27 00:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[open]]></wp:ping_status>
+		<wp:post_name><![CDATA[block-preset-classes-demo]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta><wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key><wp:meta_value><![CDATA[default]]></wp:meta_value></wp:postmeta>
+	</item>
+</channel>
+</rss>

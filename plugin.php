@@ -17,6 +17,7 @@
  */
 
 use Bmd\BlockPresetClasses;
+use Bmd\BlockPresetClassesDemo;
 use Bmd\BlockPresetClasses\Bmd\GithubWpUpdater;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -50,5 +51,20 @@ function create_block_preset_classes_plugin(): void
 	$plugin->mount();
 }
 
+function create_block_preset_classes_demo(): void
+{
+	if ( ! get_option( 'block_preset_classes_load_demo', false ) ) {
+		return;
+	}
+
+	$demo = new BlockPresetClassesDemo(
+		plugin_dir_url( __FILE__ ),
+		plugin_dir_path( __FILE__ )
+	);
+
+	$demo->mount();
+}
+
 initialize_block_preset_classes_updater();
 create_block_preset_classes_plugin();
+create_block_preset_classes_demo();

@@ -18,27 +18,28 @@ namespace Bmd;
  */
 interface BasicPlugin
 {
-    /**
-    * Mount the plugin.
-    *
-    * @return void
-    */
-    public function mount(): void;
-    /**
-    * Setter for the URL property.
-    *
-    * @param string $url string URL to set.
-    *
-    * @return void
-    */
-    public function setUrl( string $url ): void;
+	/**
+	 * Mount the plugin.
+	 *
+	 * @return void
+	 */
+	public function mount(): void;
 
-    /**
-    * Setter for the path property.
-    *
-    * @param string $path string path to set.
-    *
-    * @return void
-    */
-    public function setPath( string $path ): void;
+	/**
+	 * Setter for the URL property.
+	 *
+	 * @param string $url string URL to set.
+	 *
+	 * @return void
+	 */
+	public function setUrl( string $url ): void;
+
+	/**
+	 * Setter for the path property.
+	 *
+	 * @param string $path string path to set.
+	 *
+	 * @return void
+	 */
+	public function setPath( string $path ): void;
 }
