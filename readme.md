@@ -1,3 +1,5 @@
+![Block Preset Classes banner](assets/banner-1544x500.jpg)
+
 # Block Preset Classes
 
 ![Version](https://img.shields.io/badge/version-0.3.1-blue)
