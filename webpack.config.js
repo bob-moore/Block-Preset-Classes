@@ -41,7 +41,7 @@ const assetConfig = {
 		...plugins,
 		new RemoveEmptyScriptsPlugin(),
 		new MiniCssExtractPlugin( { filename: '[name].css' } ),
-	]
+	],
 };
 
 module.exports = () => {

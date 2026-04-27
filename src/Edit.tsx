@@ -44,7 +44,9 @@ export const Edit = createHigherOrderComponent<
 	return ( props: BlockEditProps< BlockAttributes > ) => {
 		const { attributes, setAttributes, isSelected, name } = props;
 		const { className = '' } = attributes;
-		const [ blockClasses, setBlockClasses ] = useState< Set< string > >( new Set() );
+		const [ blockClasses, setBlockClasses ] = useState< Set< string > >(
+			new Set()
+		);
 		const presetOptions = useBlockClassOptions(
 			name,
 			attributes as Record< string, unknown >
@@ -112,7 +114,12 @@ export const Edit = createHigherOrderComponent<
 									return (
 										<Button
 											key={ value }
-											onClick={ () => togglePresetClass( value, ! isActive ) }
+											onClick={ () =>
+												togglePresetClass(
+													value,
+													! isActive
+												)
+											}
 											isPressed={ isActive }
 										>
 											{ label }
