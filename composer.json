@@ -24,6 +24,11 @@
             "Bmd\\": "./inc"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Bmd\\Tests\\": "./tests"
+        }
+    },
     "require": {},
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
@@ -32,7 +37,8 @@
         "phpstan/phpstan": "^1.10",
         "szepeviktor/phpstan-wordpress": "^1.3",
         "phpcsstandards/phpcsutils": "^1.0",
-        "wpify/scoper": "^3.2"
+        "wpify/scoper": "^3.2",
+        "10up/wp_mock": "^1.0"
     },
     "scripts": {
         "phpstan": "./vendor/bin/phpstan analyze -c ./phpstan.neon --memory-limit=2048M",
@@ -42,7 +48,8 @@
         "phpsniff:PSR12": "./vendor/bin/phpcs ./inc -v --standard='PSR12'",
         "phpsniff:PSR2": "./vendor/bin/phpcs ./inc -v --standard='PSR2'",
         "phpsniff:WP": "./vendor/bin/phpcs ./inc -v --standard='WordPress'",
-        "wpify-scoper": "wpify-scoper"
+        "wpify-scoper": "wpify-scoper",
+        "test": "./vendor/bin/phpunit"
     },
     "extra": {
         "wpify-scoper": {
