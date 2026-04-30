@@ -2,8 +2,8 @@
 Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
-Tested up to: 6.7
-Stable tag: 0.3.1
+Tested up to: 7.0
+Stable tag: 0.3.2
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,11 @@ Yes. Require the package, then instantiate and call `mount()`:
 
 == Changelog ==
 
+= 0.3.2 =
+
+* Added searchable multi-select UI for blocks with more than ten preset options.
+* Added `react-select` as the editor select dependency.
+
 = 0.3.1 =
 
 * Added PHPUnit coverage with WP_Mock.
@@ -117,6 +122,10 @@ Yes. Require the package, then instantiate and call `mount()`:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.2 =
+
+Adds a searchable multi-select control when a block has many presets.
 
 = 0.3.1 =
 

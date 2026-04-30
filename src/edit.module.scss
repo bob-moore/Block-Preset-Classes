@@ -14,3 +14,39 @@
 		}
 	}
 }
+
+.select-container {
+	margin-top: 4px;
+
+	:global {
+
+		.block-preset-classes-select__control {
+			border-color: #ddd;
+			border-radius: 2px;
+			box-shadow: none;
+			min-height: 36px;
+
+			&:hover,
+			&--is-focused {
+				border-color: var(--wp-admin-theme-color);
+			}
+		}
+
+		.block-preset-classes-select__multi-value {
+			background-color: #f0f0f0;
+			border-radius: 2px;
+		}
+
+		.block-preset-classes-select__multi-value__label {
+			font-size: 12px;
+		}
+
+		.block-preset-classes-select__option--is-focused {
+			background-color: #f0f6fc;
+		}
+
+		.block-preset-classes-select__option--is-selected {
+			background-color: var(--wp-admin-theme-color);
+		}
+	}
+}

@@ -5,9 +5,9 @@
  * Author:            Bob Moore
  * Author URI:        https://www.bobmoore.dev
  * Description:       Adds configurable preset classes to Gutenberg blocks.
- * Version:           0.3.1
+ * Version:           0.3.2
  * Requires at least: 6.7
- * Tested up to:      6.7
+ * Tested up to:      7.0
  * Requires PHP:      8.2
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html

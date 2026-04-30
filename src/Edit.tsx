@@ -1,7 +1,7 @@
 /**
  * WordPress Dependencies
  */
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useMemo, useState } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, Button } from '@wordpress/components';
@@ -10,6 +10,7 @@ import { PanelBody, Button } from '@wordpress/components';
  * External Dependencies
  */
 import React, { FC } from 'react';
+import Select, { MultiValue } from 'react-select';
 
 /**
  * Internal Dependencies
@@ -21,6 +22,13 @@ import styles from './edit.module.scss';
 type BlockAttributes = {
 	className: string;
 };
+
+type PresetOption = {
+	label: string;
+	value: string;
+};
+
+const MAX_BUTTON_OPTIONS = 10;
 
 const sortedSetValues = ( set: Set< string > ): string[] => {
 	return Array.from( set ).sort();
@@ -52,6 +60,14 @@ export const Edit = createHigherOrderComponent<
 			attributes as Record< string, unknown >
 		);
 		const currentBlockClasses = useRef( new Set< string >() );
+		const presetOptionValues = useMemo( () => {
+			return new Set( presetOptions.map( ( { value } ) => value ) );
+		}, [ presetOptions ] );
+		const selectedPresetOptions = useMemo( () => {
+			return presetOptions.filter( ( { value } ) =>
+				blockClasses.has( value )
+			);
+		}, [ blockClasses, presetOptions ] );
 
 		useEffect( () => {
 			const classSet = new Set(
@@ -96,6 +112,20 @@ export const Edit = createHigherOrderComponent<
 			addClass( value );
 		};
 
+		const setPresetClasses = ( values: MultiValue< PresetOption > ) => {
+			const classes = new Set( blockClasses );
+
+			presetOptionValues.forEach( ( value ) => {
+				classes.delete( value );
+			} );
+
+			values.forEach( ( { value } ) => {
+				classes.add( value );
+			} );
+
+			setBlockClasses( classes );
+		};
+
 		if ( ! presetOptions.length ) {
 			return <BlockEdit { ...props } />;
 		}
@@ -107,26 +137,47 @@ export const Edit = createHigherOrderComponent<
 				{ isSelected && (
 					<InspectorControls>
 						<PanelBody title="Block Presets" initialOpen={ false }>
-							<div className={ styles[ 'button-container' ] }>
-								{ presetOptions.map( ( { label, value } ) => {
-									const isActive = blockClasses.has( value );
+							{ presetOptions.length > MAX_BUTTON_OPTIONS ? (
+								<div className={ styles[ 'select-container' ] }>
+									<Select
+										aria-label="Block presets"
+										classNamePrefix="block-preset-classes-select"
+										closeMenuOnSelect={ false }
+										hideSelectedOptions={ false }
+										isClearable
+										isMulti
+										options={ presetOptions }
+										placeholder="Select presets..."
+										value={ selectedPresetOptions }
+										onChange={ setPresetClasses }
+									/>
+								</div>
+							) : (
+								<div className={ styles[ 'button-container' ] }>
+									{ presetOptions.map(
+										( { label, value } ) => {
+											const isActive =
+												blockClasses.has( value );
 
-									return (
-										<Button
-											key={ value }
-											onClick={ () =>
-												togglePresetClass(
-													value,
-													! isActive
-												)
-											}
-											isPressed={ isActive }
-										>
-											{ label }
-										</Button>
-									);
-								} ) }
-							</div>
+											return (
+												<Button
+													key={ value }
+													onClick={ () =>
+														togglePresetClass(
+															value,
+															! isActive
+														)
+													}
+													isPressed={ isActive }
+													variant="secondary"
+												>
+													{ label }
+												</Button>
+											);
+										}
+									) }
+								</div>
+							) }
 						</PanelBody>
 					</InspectorControls>
 				) }

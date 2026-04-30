@@ -1,6 +1,6 @@
 {
 	"name": "block-preset-classes",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "Adds configurable preset classes to Gutenberg blocks.",
 	"author": "Bob Moore",
 	"license": "GPL-2.0-or-later",
@@ -50,5 +50,8 @@
 		"!vendor/**/phpunit.xml",
 		"readme.txt",
 		"inc"
-	]
+	],
+	"dependencies": {
+		"react-select": "^5.10.2"
+	}
 }
