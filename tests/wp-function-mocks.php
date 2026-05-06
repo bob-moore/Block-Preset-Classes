@@ -41,6 +41,18 @@ if ( ! function_exists( 'plugin_dir_path' ) ) {
 	}
 }
 
+if ( ! function_exists( 'get_theme_file_path' ) ) {
+	function get_theme_file_path( $file = '' ) {
+		return trailingslashit( '/var/www/html/wp-content/themes/example-theme' ) . ltrim( (string) $file, '/\\' );
+	}
+}
+
+if ( ! function_exists( 'get_theme_file_uri' ) ) {
+	function get_theme_file_uri( $file = '' ) {
+		return trailingslashit( 'https://example.test/wp-content/themes/example-theme' ) . ltrim( (string) $file, '/\\' );
+	}
+}
+
 if ( ! function_exists( 'wp_normalize_path' ) ) {
 	function wp_normalize_path( $path ) {
 		return str_replace( '\\', '/', (string) $path );

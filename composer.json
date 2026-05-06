@@ -49,7 +49,7 @@
         "phpsniff:PSR2": "./vendor/bin/phpcs ./inc -v --standard='PSR2'",
         "phpsniff:WP": "./vendor/bin/phpcs ./inc -v --standard='WordPress'",
         "wpify-scoper": "wpify-scoper",
-        "test": "./vendor/bin/phpunit"
+        "phpunit": "./vendor/bin/phpunit"
     },
     "extra": {
         "wpify-scoper": {

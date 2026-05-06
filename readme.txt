@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 7.0
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,10 +25,9 @@ Features include:
 
 == Installation ==
 
-1. Build assets with `npm run build`.
-2. Package with `npm run zip` or zip the plugin folder.
-3. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
-4. Upload and activate Block Preset Classes.
+1. Download the latest release ZIP: https://github.com/bob-moore/Block-Preset-Classes/releases/latest/download/block-preset-classes.zip
+2. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
+3. Upload and activate Block Preset Classes.
 
 == Usage ==
 
@@ -76,13 +75,20 @@ Yes. Use the `bmd.blockPresets.classOptions` filter. It receives:
 
 Yes. Require the package, then instantiate and call `mount()`:
 
-`$plugin = new BlockPresetClasses(`
-`    plugin_dir_url( __FILE__ ),`
-`    plugin_dir_path( __FILE__ )`
-`);`
+`$plugin = new BlockPresetClasses();`
 `$plugin->mount();`
 
+If your package layout needs explicit values, the constructor still accepts the package URL and absolute package path.
+
 == Changelog ==
+
+= 0.3.3 =
+
+* Added automatic package URL/path inference for Composer consumers.
+* Removed the shared plugin interface dependency.
+* Loaded demo presets only in local and WordPress Playground environments.
+* Updated Playground setup to use `IS_PLAYGROUND` and the latest release ZIP.
+* Added repository-local Codex/GitHub skills for WordPress workflows.
 
 = 0.3.2 =
 
@@ -99,17 +105,17 @@ Yes. Require the package, then instantiate and call `mount()`:
 
 * Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.
 * Added `wpify/scoper` configuration and tracked scoped lock files for reproducible releases.
-* Standardized release packaging on `npm run zip`.
+* Standardized the release packaging workflow.
 
 = 0.2.1 =
 
 * Added GitHub updater integration for release-based plugin updates.
-* Packaged release now includes updater dependency via Composer install.
+* Release ZIP now includes updater dependency via Composer install.
 
 = 0.2.0 =
 
-* Added `BasicPlugin` interface with `mount()`, `setUrl()`, `setPath()`.
-* Refactored `BlockPresetClasses` to implement `BasicPlugin` with injected URL and path.
+* Added `mount()`, `setUrl()`, and `setPath()` methods for package bootstrap integration.
+* Refactored `BlockPresetClasses` to support injected URL and path values.
 * `buildPath` / `buildUrl` now pass through `block_preset_classes_plugin_path` / `block_preset_classes_plugin_url` filters.
 * Plugin bootstrap now uses a named function `create_block_preset_classes_plugin()`.
 * Removed hardcoded version from `composer.json`.
@@ -122,6 +128,10 @@ Yes. Require the package, then instantiate and call `mount()`:
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.3 =
+
+Improves Composer usage, release ZIP installation docs, and local/Playground demo loading.
 
 = 0.3.2 =
 
@@ -141,7 +151,7 @@ Adds GitHub release update support for installed copies of the plugin.
 
 = 0.2.0 =
 
-Structural refactor. If using as a Composer library, update instantiation to pass `plugin_dir_url( __FILE__ )` and `plugin_dir_path( __FILE__ )` to the constructor and call `$plugin->mount()`.
+Structural refactor. If using as a Composer library, instantiate the class and call `$plugin->mount()`. Pass explicit URL/path values only when your package layout requires them.
 
 = 0.1.0 =
 

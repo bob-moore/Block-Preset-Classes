@@ -2,12 +2,12 @@
 
 # Block Preset Classes
 
-![Version](https://img.shields.io/badge/version-0.3.2-blue)
+![Version](https://img.shields.io/badge/version-0.3.3-blue)
 ![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-3858e9?logo=wordpress&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)
 ![License](https://img.shields.io/badge/license-GPL--2.0--or--later-green)
 ![Lint and Build](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-build.yml/badge.svg)
-[![Try it in the WordPress Playground](https://img.shields.io/badge/Try_in_Playground-v0.3.2-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
+[![Try it in the WordPress Playground](https://img.shields.io/badge/Try_in_Playground-v0.3.3-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
 
 Block styles are useful… until you need more than one.
 
@@ -54,16 +54,14 @@ It provides:
 
 - WordPress 6.7 or later
 - PHP 8.2 or later
-- Node.js 18.12 or later (for local development/build)
 
 ## Installation
 
 ### As a WordPress plugin
 
-1. Build production assets (`npm run build`).
-2. Package the plugin (`npm run zip`) or zip the plugin directory.
-3. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
-4. Upload the ZIP and activate Block Preset Classes.
+1. Download the [latest release ZIP](https://github.com/bob-moore/Block-Preset-Classes/releases/latest/download/block-preset-classes.zip).
+2. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
+3. Upload the ZIP and activate Block Preset Classes.
 
 ### As a Composer dependency
 
@@ -76,13 +74,12 @@ It provides:
 
 use Bmd\BlockPresetClasses;
 
-$plugin = new BlockPresetClasses(
-    plugin_dir_url( __FILE__ ),
-    plugin_dir_path( __FILE__ )
-);
-
+$plugin = new BlockPresetClasses();
 $plugin->mount();
 ```
+
+If your package layout needs explicit values, the constructor still accepts the
+package URL and absolute package path.
 
 ## Registering Presets
 
@@ -141,6 +138,14 @@ addFilter(
 
 ## Changelog
 
+### 0.3.3
+
+- Added automatic package URL/path inference for Composer consumers.
+- Removed the shared plugin interface dependency.
+- Loaded demo presets only in local and WordPress Playground environments.
+- Updated Playground setup to use `IS_PLAYGROUND` and the latest release ZIP.
+- Added repository-local Codex/GitHub skills for WordPress workflows.
+
 ### 0.3.2
 
 - Added searchable multi-select UI for blocks with more than ten preset options.
@@ -156,17 +161,17 @@ addFilter(
 
 - Moved the GitHub updater into a scoped Composer dependency under `vendor/scoped`.
 - Added `wpify/scoper` configuration and tracked scoped lock files for reproducible releases.
-- Standardized release packaging on `npm run zip`.
+- Standardized the release packaging workflow.
 
 ### 0.2.1
 
 - Added GitHub updater integration so plugin installs can detect new releases from this repository.
-- Packaged release now includes the updater dependency installed from Composer.
+- Release ZIP now includes the updater dependency installed from Composer.
 
 ### 0.2.0
 
-- Added `BasicPlugin` interface (`inc/BasicPlugin.php`) with `mount()`, `setUrl()`, `setPath()`.
-- Refactored `BlockPresetClasses` to implement `BasicPlugin` with injected URL and path.
+- Added `mount()`, `setUrl()`, and `setPath()` methods for package bootstrap integration.
+- Refactored `BlockPresetClasses` to support injected URL and path values.
 - `buildPath` and `buildUrl` now pass through `block_preset_classes_plugin_path` / `block_preset_classes_plugin_url` filters for integrator overrides.
 - Updated plugin bootstrap to a named function `create_block_preset_classes_plugin()`.
 - Removed hardcoded `"version"` from `composer.json`; version is now read from git tags.

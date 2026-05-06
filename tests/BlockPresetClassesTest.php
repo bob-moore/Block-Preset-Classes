@@ -66,6 +66,27 @@ class BlockPresetClassesTest extends TestCase
 	/**
 	 * @test
 	 */
+	public function constructor_infers_url_and_path_when_not_provided(): void
+	{
+		$plugin = new class() extends BlockPresetClasses {
+			public function publicUrl(): string
+			{
+				return $this->url;
+			}
+
+			public function publicPath(): string
+			{
+				return $this->path;
+			}
+		};
+
+		$this->assertSame( 'https://example.test/block-preset-classes/', $plugin->publicUrl() );
+		$this->assertSame( trailingslashit( BlockPresetClasses::getPath() ), $plugin->publicPath() );
+	}
+
+	/**
+	 * @test
+	 */
 	public function mount_registers_expected_wordpress_hooks(): void
 	{
 		$plugin = new BlockPresetClasses( 'https://example.test/plugin/', '/var/www/plugin/' );

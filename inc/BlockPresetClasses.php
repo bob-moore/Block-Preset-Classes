@@ -18,7 +18,7 @@ use WP_Block_Type_Registry;
 /**
  * Service class for block preset classes.
  */
-class BlockPresetClasses implements BasicPlugin
+class BlockPresetClasses
 {
 	/**
 	 * URL of this plugin/package.
@@ -74,8 +74,18 @@ class BlockPresetClasses implements BasicPlugin
 		string $path = '',
 		?WP_Block_Type_Registry $block_registry = null
 	) {
-		$this->setUrl( ! empty( $url ) ? esc_url_raw( $url ) : plugin_dir_url( __DIR__ ) );
-		$this->setPath( ! empty( $path ) ? esc_html( $path ) : plugin_dir_path( __DIR__ ) );
+		$this->setUrl(
+			! empty( $url )
+			? esc_url_raw( $url )
+			: $this->inferUrl()
+		);
+
+		$this->setPath(
+			! empty( $path )
+			? esc_html( $path )
+			: $this->inferPath()
+		);
+
 		$this->block_registry = $block_registry ?? WP_Block_Type_Registry::get_instance();
 	}
 
@@ -88,7 +98,9 @@ class BlockPresetClasses implements BasicPlugin
 	 */
 	public function setUrl( string $url ): void
 	{
-		$this->url = trailingslashit( $url );
+		$this->url = trailingslashit(
+			apply_filters( 'block_preset_classes_plugin_url', $url )
+		);
 	}
 
 	/**
@@ -100,7 +112,83 @@ class BlockPresetClasses implements BasicPlugin
 	 */
 	public function setPath( string $path ): void
 	{
-		$this->path = trailingslashit( $path );
+		$this->path = trailingslashit(
+			apply_filters( 'block_preset_classes_plugin_path', $path )
+		);
+	}
+
+	/**
+	 * Get the package root path.
+	 *
+	 * @return string Absolute normalized path to the package root.
+	 */
+	public static function getPath(): string
+	{
+		return wp_normalize_path( dirname( __DIR__ ) );
+	}
+
+	/**
+	 * Infer the public URL for the package root.
+	 *
+	 * Supports packages loaded directly as plugins and packages installed inside
+	 * themes through Composer.
+	 *
+	 * @return string Public URL to the package root.
+	 */
+	protected function inferUrl(): string
+	{
+		$path = self::getPath();
+
+		return 'theme' === $this->getUsageContext()
+			? $this->buildThemeUrl( $path )
+			: plugin_dir_url( $path . '/composer.json' );
+	}
+
+	/**
+	 * Infer the filesystem path for the package root.
+	 *
+	 * Supports packages loaded directly as plugins and packages installed inside
+	 * themes through Composer.
+	 *
+	 * @return string Absolute path to the package root.
+	 */
+	protected function inferPath(): string
+	{
+		$path = self::getPath();
+
+		return $path;
+	}
+
+	/**
+	 * Build a theme-relative package URL from an absolute package path.
+	 *
+	 * @param string $path Absolute path to the package root.
+	 *
+	 * @return string Public URL to the package root inside the active theme.
+	 */
+	protected function buildThemeUrl( string $path ): string
+	{
+		$relative_path = str_replace(
+			get_theme_file_path(),
+			'',
+			$path
+		);
+
+		return get_theme_file_uri( $relative_path );
+	}
+
+	/**
+	 * Determine whether the package is being used from a theme or plugin.
+	 *
+	 * @return 'theme'|'plugin' Usage context.
+	 */
+	protected function getUsageContext(): string
+	{
+		$path = self::getPath();
+
+		return str_contains( $path, get_theme_file_path() )
+			? 'theme'
+			: 'plugin';
 	}
 
 	/**
@@ -188,13 +276,7 @@ class BlockPresetClasses implements BasicPlugin
 	 */
 	protected function buildPath( string $relative_path ): string
 	{
-		$path = apply_filters( 'block_preset_classes_plugin_path', $this->path );
-
-		if ( '' === $path ) {
-			return '';
-		}
-
-		return wp_normalize_path( $path . 'build/' . ltrim( $relative_path, '/' ) );
+		return wp_normalize_path( $this->path . 'build/' . ltrim( $relative_path, '/' ) );
 	}
 
 	/**
@@ -206,13 +288,7 @@ class BlockPresetClasses implements BasicPlugin
 	 */
 	protected function buildUrl( string $relative_path ): string
 	{
-		$url = apply_filters( 'block_preset_classes_plugin_url', $this->url );
-
-		if ( '' === $url ) {
-			return '';
-		}
-
-		return $url . 'build/' . ltrim( $relative_path, '/' );
+		return $this->url . 'build/' . ltrim( $relative_path, '/' );
 	}
 
 	/**

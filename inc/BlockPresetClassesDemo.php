@@ -16,7 +16,7 @@ namespace Bmd;
 /**
  * Registers sample presets and styles for the WordPress Playground demo.
  */
-class BlockPresetClassesDemo implements BasicPlugin
+class BlockPresetClassesDemo
 {
 	/**
 	 * URL of this plugin/package.
