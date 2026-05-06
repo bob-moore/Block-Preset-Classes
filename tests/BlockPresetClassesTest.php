@@ -80,7 +80,7 @@ class BlockPresetClassesTest extends TestCase
 			}
 		};
 
-		$this->assertSame( 'https://example.test/block-preset-classes/', $plugin->publicUrl() );
+		$this->assertSame( 'https://example.test/' . basename( BlockPresetClasses::getPath() ) . '/', $plugin->publicUrl() );
 		$this->assertSame( trailingslashit( BlockPresetClasses::getPath() ), $plugin->publicPath() );
 	}
 
