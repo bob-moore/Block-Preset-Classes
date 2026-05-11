@@ -2,7 +2,12 @@
     "name": "bmd/block-preset-classes",
     "description": "Extension to add preset classes to wordpress blocks.",
     "type": "library",
-    "author": "Bob Moore <bob@bobmoore.dev>",
+    "authors": [
+        {
+            "name": "Bob Moore",
+            "email": "bob@bobmoore.dev"
+        }
+    ],
     "homepage": "https://github.com/bob-moore/Block-Preset-Classes",
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
@@ -21,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Bmd\\": "./inc"
+            "Bmd\\BlockPresetClasses\\": "./inc"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Bmd\\Tests\\": "./tests"
+            "Bmd\\BlockPresetClasses\\Tests\\": "./tests"
         }
     },
     "require": {},
@@ -48,6 +53,8 @@
         "phpsniff:PSR12": "./vendor/bin/phpcs ./inc -v --standard='PSR12'",
         "phpsniff:PSR2": "./vendor/bin/phpcs ./inc -v --standard='PSR2'",
         "phpsniff:WP": "./vendor/bin/phpcs ./inc -v --standard='WordPress'",
+        "wpify:install": "wpify-scoper install",
+        "wpify:update": "wpify-scoper update",
         "wpify-scoper": "wpify-scoper",
         "phpunit": "./vendor/bin/phpunit"
     },

@@ -2,7 +2,7 @@
 /**
  * WordPress mock functions and classes.
  *
- * @package Bmd\Tests
+ * @package Bmd\BlockPresetClasses\Tests
  */
 
 if ( ! function_exists( 'esc_url_raw' ) ) {

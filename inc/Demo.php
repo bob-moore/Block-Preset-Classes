@@ -11,12 +11,12 @@
  * @since      0.3.0
  */
 
-namespace Bmd;
+namespace Bmd\BlockPresetClasses;
 
 /**
  * Registers sample presets and styles for the WordPress Playground demo.
  */
-class BlockPresetClassesDemo
+class Demo
 {
 	/**
 	 * URL of this plugin/package.
@@ -63,14 +63,14 @@ class BlockPresetClassesDemo
 	 */
 	public function __construct( string $url = '', string $path = '' )
 	{
-		$this->setUrl( ! empty( $url ) ? esc_url_raw( $url ) : plugin_dir_url( __DIR__ ) );
-		$this->setPath( ! empty( $path ) ? esc_html( $path ) : plugin_dir_path( __DIR__ ) );
+		$this->setUrl( ! empty( $url ) ? esc_url_raw( $url ) : Utilities::getUrl() );
+		$this->setPath( ! empty( $path ) ? esc_html( $path ) : Utilities::getPath() );
 	}
 
 	/**
-	 * Setter for the URL property.
+	 * Set the plugin root URL.
 	 *
-	 * @param string $url string URL to set.
+	 * @param string $url URL to the plugin root.
 	 *
 	 * @return void
 	 */
@@ -80,15 +80,15 @@ class BlockPresetClassesDemo
 	}
 
 	/**
-	 * Setter for the path property.
+	 * Set the plugin root path.
 	 *
-	 * @param string $path string path to set.
+	 * @param string $path Absolute path to the plugin root.
 	 *
 	 * @return void
 	 */
 	public function setPath( string $path ): void
 	{
-		$this->path = trailingslashit( $path );
+		$this->path = trailingslashit( wp_normalize_path( $path ) );
 	}
 
 	/**

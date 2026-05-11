@@ -1,13 +1,17 @@
-![Block Preset Classes banner](assets/banner-1544x500.jpg)
-
 # Block Preset Classes
 
-![Version](https://img.shields.io/badge/version-0.3.3-blue)
-![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-3858e9?logo=wordpress&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)
-![License](https://img.shields.io/badge/license-GPL--2.0--or--later-green)
-![Lint and Build](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-build.yml/badge.svg)
-[![Try it in the WordPress Playground](https://img.shields.io/badge/Try_in_Playground-v0.3.3-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
+![Block Preset Classes](assets/banner-1544x500.jpg)
+
+[![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-3858e9?logo=wordpress&logoColor=fff)](https://wordpress.org/)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777bb4?logo=php&logoColor=fff)](https://www.php.net/)
+[![Latest Release](https://img.shields.io/github/v/release/bob-moore/Block-Preset-Classes?label=release)](https://github.com/bob-moore/Block-Preset-Classes/releases/latest)
+[![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](https://www.gnu.org/licenses/gpl-2.0.html)
+
+[![Lint CSS](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-css.yml/badge.svg)](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-css.yml)
+[![Lint JS](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-js.yml/badge.svg)](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-js.yml)
+[![Lint PHP](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-php.yml/badge.svg)](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-php.yml)
+
+Want to give it a test drive? Try it in the WP Playground: [![Try it in the WordPress Playground](https://img.shields.io/badge/WP_Playground-v0.3.4-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
 
 Block styles are useful… until you need more than one.
 
@@ -15,71 +19,69 @@ By default, WordPress only lets you apply a single block style at a time. That m
 
 This plugin solves that.
 
-What it does
-
 Block Preset Classes lets you define reusable presets (CSS classes) and apply multiple of them to a block.
 
 Instead of picking one style, you can stack presets and mix them however you want.
 
 Under the hood, it simply adds those classes to the block’s Additional CSS Classes field — the same way block styles work, just without the one-style limit.
 
-Why use it
-	•	Avoid creating dozens of redundant block styles
-	•	Mix and match design options freely
-	•	Keep your CSS simple and scalable
-
-How it works
-	1.	Define your preset classes
-	2.	Select them in the editor
-	3.	Classes get added to the block
-
-That’s it. No magic — just classes.
-
-It provides:
-
-- A REST endpoint that returns preset options per block name.
-- A block editor panel that lets users toggle class presets on selected blocks.
-- A JavaScript filter that allows dynamic, attribute-aware option mutation at runtime.
+Add reusable preset classes to WordPress blocks and let editors stack multiple presets on the same block.
 
 ## Features
 
-- Extends block editor behavior via `editor.BlockEdit` filter.
-- Supports global and block-specific presets.
-- Uses one REST request per editor load, then filters in JavaScript from cache.
-- Supports dynamic option mutation in JS via `bmd.blockPresets.classOptions`.
-- Accepts a clean internal PHP map format:
-	- `block_name => [ label => value ]`
+- Lets editors apply multiple class presets to the same block instead of being limited to one block style.
+- Supports global and block-specific preset definitions.
+- Loads preset options from one REST request per editor session, then filters in JavaScript from cache.
+- Supports runtime option mutation in JS via `bmd.blockPresets.classOptions`.
+- Ships with a scoped GitHub updater for release-based plugin updates.
+- Works as both a standalone plugin and a Composer-installed dependency.
 
 ## Requirements
 
-- WordPress 6.7 or later
-- PHP 8.2 or later
+- WordPress 6.7+
+- PHP 8.2+
 
 ## Installation
 
-### As a WordPress plugin
+### Install as a plugin
 
 1. Download the [latest release ZIP](https://github.com/bob-moore/Block-Preset-Classes/releases/latest/download/block-preset-classes.zip).
 2. In WordPress admin, go to Plugins > Add New Plugin > Upload Plugin.
 3. Upload the ZIP and activate Block Preset Classes.
 
-### As a Composer dependency
+### Install via Composer (library usage)
 
-1. Require the package from your consuming plugin or theme.
-2. Ensure Composer autoloading is active.
-3. Instantiate and hook the plugin class in your bootstrap:
+If you are embedding this into your own project:
+
+```bash
+composer require bmd/block-preset-classes
+```
+
+Then bootstrap:
 
 ```php
-<?php
+use Bmd\BlockPresetClasses\Plugin;
 
-use Bmd\BlockPresetClasses;
+$dependency_url  = plugin_dir_url( __FILE__ ) . 'vendor/bmd/block-preset-classes/';
+$dependency_path = plugin_dir_path( __FILE__ ) . 'vendor/bmd/block-preset-classes/';
 
-$plugin = new BlockPresetClasses();
+$plugin = new Plugin(
+	$dependency_url,
+	$dependency_path
+);
+
 $plugin->mount();
 ```
 
-If your package layout needs explicit values, the constructor still accepts the
-package URL and absolute package path.
+The `Plugin` constructor expects the URL and filesystem path to the Block Preset Classes dependency root, not the file where you call it. For example, pass `/path/to/vendor/bmd/block-preset-classes/` and the matching public URL for that directory.
+
+## Usage
+
+1. Define preset classes in PHP.
+2. Select a supported block in the editor.
+3. Open the preset class controls in the sidebar.
+4. Choose one or more presets.
+5. Save the post and the preset classes are added to the block.
 
 ## Registering Presets
 
@@ -104,10 +106,7 @@ add_filter( 'block_preset_classes', function( array $presets ): array {
 } );
 ```
 
-Notes:
-
-- If value does not start with `has-preset-`, it is normalized automatically.
-- REST output is returned as `[{ label, value }]` arrays for JS consumption.
+Each preset map should use the shape `block_name => [ label => value ]`. If a value does not start with `has-preset-`, it is normalized automatically.
 
 ## JavaScript Runtime Mutation
 
@@ -130,16 +129,32 @@ addFilter(
 );
 ```
 
+This hook runs after the REST data has loaded, so you can adjust options based on block name or current attributes without changing the server-side preset map.
+
 ## REST Endpoint
 
 - Route: `/wp-json/block-preset-classes/v2/all`
 - Method: `GET`
 - Auth: Public (permission callback returns true)
 
+## Updates
+
+This plugin is distributed through GitHub releases (not WordPress.org). The plugin includes a scoped GitHub updater so WordPress can detect and apply new versions from this repository.
+
 ## Changelog
+
+### 0.3.4
+
+- Unified the PHP architecture around `ServiceLoader`, `Plugin`, `Demo`, and `Utilities` classes under the `Bmd\\BlockPresetClasses` namespace.
+- Simplified editor asset loading to match the related plugins' enqueue and asset-resolution patterns.
+- Split GitHub Actions into dedicated CSS, JS, and PHP workflows and aligned package lint scripts with the other plugins.
+- Updated README and release metadata to match the shared plugin structure.
 
 ### 0.3.3
 
+- Refined the PHP plugin architecture around a dedicated bootstrapper, plugin service, demo service, and utility helper.
+- Updated Composer autoloading for the `Bmd\BlockPresetClasses` namespace structure.
+- Split GitHub Actions into separate CSS, JS, and PHP workflows to match the related plugins.
 - Added automatic package URL/path inference for Composer consumers.
 - Removed the shared plugin interface dependency.
 - Loaded demo presets only in local and WordPress Playground environments.
@@ -191,4 +206,4 @@ addFilter(
 
 ## License
 
-GPL-2.0-or-later. See https://www.gnu.org/licenses/gpl-2.0.html.
+GPL-2.0-or-later. See [GNU GPL v2.0 or later](https://www.gnu.org/licenses/gpl-2.0.html).

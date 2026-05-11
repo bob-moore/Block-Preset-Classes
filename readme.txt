@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 7.0
-Stable tag: 0.3.3
+Stable tag: 0.3.4
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -73,14 +73,22 @@ Yes. Use the `bmd.blockPresets.classOptions` filter. It receives:
 
 = Can I use this as a Composer dependency? =
 
-Yes. Require the package, then instantiate and call `mount()`:
+Yes. Require the package, then instantiate `Bmd\BlockPresetClasses\Plugin` and call `mount()`:
 
-`$plugin = new BlockPresetClasses();`
+`use Bmd\BlockPresetClasses\Plugin;`
+`$plugin = new Plugin();`
 `$plugin->mount();`
 
 If your package layout needs explicit values, the constructor still accepts the package URL and absolute package path.
 
 == Changelog ==
+
+= 0.3.4 =
+
+* Unified the PHP architecture around `ServiceLoader`, `Plugin`, `Demo`, and `Utilities` classes under the `Bmd\BlockPresetClasses` namespace.
+* Simplified editor asset loading to match the related plugins' enqueue and asset-resolution patterns.
+* Split GitHub Actions into dedicated CSS, JS, and PHP workflows and aligned package lint scripts with the other plugins.
+* Updated README and release metadata to match the shared plugin structure.
 
 = 0.3.3 =
 
@@ -128,6 +136,10 @@ If your package layout needs explicit values, the constructor still accepts the 
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.4 =
+
+Updates the plugin to the shared architecture used by the related plugins and refreshes release/workflow metadata.
 
 = 0.3.3 =
 

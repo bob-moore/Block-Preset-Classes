@@ -1,6 +1,6 @@
 <?php
 /**
- * Preset classes block extension
+ * Main plugin service.
  *
  * PHP Version 8.2
  *
@@ -11,14 +11,12 @@
  * @since      1.0.0
  */
 
-namespace Bmd;
-
-use WP_Block_Type_Registry;
+namespace Bmd\BlockPresetClasses;
 
 /**
  * Service class for block preset classes.
  */
-class BlockPresetClasses
+class Plugin
 {
 	/**
 	 * URL of this plugin/package.
@@ -35,160 +33,52 @@ class BlockPresetClasses
 	protected string $path;
 
 	/**
-	 * WordPress block registry.
-	 *
-	 * @var WP_Block_Type_Registry
-	 */
-	protected WP_Block_Type_Registry $block_registry;
-
-	/**
 	 * Array of block presets.
-	 *
-	 * Internal structure:
-	 * [
-	 *   'core/group' => [
-	 *     'My Label' => 'has-preset-my-label',
-	 *   ],
-	 * ]
 	 *
 	 * @var array<string, array<string, string>>
 	 */
 	protected array $block_presets = [];
 
 	/**
-	 * Array of global block classes.
-	 *
-	 * @var array<string, string>
-	 */
-	protected array $global_block_classes = [];
-
-	/**
 	 * Constructor.
 	 *
-	 * @param string                      $url            URL to the plugin directory.
-	 * @param string                      $path           Absolute path to the plugin directory.
-	 * @param WP_Block_Type_Registry|null $block_registry The block registry.
+	 * @param string $url  URL to the plugin directory.
+	 * @param string $path Absolute path to the plugin directory.
 	 */
 	public function __construct(
 		string $url = '',
-		string $path = '',
-		?WP_Block_Type_Registry $block_registry = null
+		string $path = ''
 	) {
-		$this->setUrl(
-			! empty( $url )
-			? esc_url_raw( $url )
-			: $this->inferUrl()
-		);
-
-		$this->setPath(
-			! empty( $path )
-			? esc_html( $path )
-			: $this->inferPath()
-		);
-
-		$this->block_registry = $block_registry ?? WP_Block_Type_Registry::get_instance();
+		$this->setUrl( ! empty( $url ) ? $url : Utilities::getUrl() );
+		$this->setPath( ! empty( $path ) ? $path : Utilities::getPath() );
 	}
 
 	/**
-	 * Setter for the URL property.
+	 * Set the plugin root URL.
 	 *
-	 * @param string $url string URL to set.
+	 * @param string $url URL to the plugin root.
 	 *
 	 * @return void
 	 */
 	public function setUrl( string $url ): void
 	{
 		$this->url = trailingslashit(
-			apply_filters( 'block_preset_classes_plugin_url', $url )
+			apply_filters( 'block_preset_classes_plugin_url', esc_url_raw( $url ) )
 		);
 	}
 
 	/**
-	 * Setter for the path property.
+	 * Set the plugin root path.
 	 *
-	 * @param string $path string path to set.
+	 * @param string $path Absolute path to the plugin root.
 	 *
 	 * @return void
 	 */
 	public function setPath( string $path ): void
 	{
 		$this->path = trailingslashit(
-			apply_filters( 'block_preset_classes_plugin_path', $path )
+			apply_filters( 'block_preset_classes_plugin_path', wp_normalize_path( $path ) )
 		);
-	}
-
-	/**
-	 * Get the package root path.
-	 *
-	 * @return string Absolute normalized path to the package root.
-	 */
-	public static function getPath(): string
-	{
-		return wp_normalize_path( dirname( __DIR__ ) );
-	}
-
-	/**
-	 * Infer the public URL for the package root.
-	 *
-	 * Supports packages loaded directly as plugins and packages installed inside
-	 * themes through Composer.
-	 *
-	 * @return string Public URL to the package root.
-	 */
-	protected function inferUrl(): string
-	{
-		$path = self::getPath();
-
-		return 'theme' === $this->getUsageContext()
-			? $this->buildThemeUrl( $path )
-			: plugin_dir_url( $path . '/composer.json' );
-	}
-
-	/**
-	 * Infer the filesystem path for the package root.
-	 *
-	 * Supports packages loaded directly as plugins and packages installed inside
-	 * themes through Composer.
-	 *
-	 * @return string Absolute path to the package root.
-	 */
-	protected function inferPath(): string
-	{
-		$path = self::getPath();
-
-		return $path;
-	}
-
-	/**
-	 * Build a theme-relative package URL from an absolute package path.
-	 *
-	 * @param string $path Absolute path to the package root.
-	 *
-	 * @return string Public URL to the package root inside the active theme.
-	 */
-	protected function buildThemeUrl( string $path ): string
-	{
-		$relative_path = str_replace(
-			get_theme_file_path(),
-			'',
-			$path
-		);
-
-		return get_theme_file_uri( $relative_path );
-	}
-
-	/**
-	 * Determine whether the package is being used from a theme or plugin.
-	 *
-	 * @return 'theme'|'plugin' Usage context.
-	 */
-	protected function getUsageContext(): string
-	{
-		$path = self::getPath();
-
-		return str_contains( $path, get_theme_file_path() )
-			? 'theme'
-			: 'plugin';
 	}
 
 	/**
@@ -198,7 +88,7 @@ class BlockPresetClasses
 	 */
 	public function mount(): void
 	{
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorScript' ] );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets' ] );
 		add_action( 'rest_api_init', [ $this, 'registerRestRoute' ] );
 	}
 
@@ -207,21 +97,17 @@ class BlockPresetClasses
 	 *
 	 * @return void
 	 */
-	public function enqueueEditorScript(): void
+	public function enqueueEditorAssets(): void
 	{
-		$script_file = $this->buildPath( 'index.js' );
+		$script_file = $this->path . 'build/index.js';
 
 		if ( ! is_file( $script_file ) ) {
 			return;
 		}
 
-		$assets  = $this->getScriptAssets();
+		$assets  = $this->getAssetData( 'index' );
 		$version = $assets['version'] ?? (string) filemtime( $script_file );
-		$src     = $this->buildUrl( 'index.js' );
-
-		if ( empty( $src ) ) {
-			return;
-		}
+		$src     = $this->url . 'build/index.js';
 
 		wp_enqueue_script(
 			'bmd-block-preset-classes-editor',
@@ -231,112 +117,60 @@ class BlockPresetClasses
 			true
 		);
 
-		$this->enqueueStyleFile( 'bmd-block-preset-classes-editor', 'index.css' );
-	}
-
-	/**
-	 * Enqueue a stylesheet from the build directory if it exists.
-	 *
-	 * @param string $handle        Style handle.
-	 * @param string $relative_path Relative file path inside build.
-	 *
-	 * @return void
-	 */
-	protected function enqueueStyleFile( string $handle, string $relative_path ): void
-	{
-		$style_file = $this->buildPath( $relative_path );
+		$style_file = $this->path . 'build/index.css';
 
 		if ( ! is_file( $style_file ) ) {
 			return;
 		}
 
-		$assets  = $this->getScriptAssets();
-		// Keep style versions in sync with script build versions when available.
-		$version = $assets['version'] ?? (string) filemtime( $style_file );
-		$src     = $this->buildUrl( $relative_path );
-
-		if ( empty( $src ) ) {
-			return;
-		}
+		$style_data = $this->getAssetData( 'index' );
 
 		wp_enqueue_style(
-			$handle,
-			$src,
+			'bmd-block-preset-classes-editor',
+			$this->url . 'build/index.css',
 			[],
-			$version
+			$style_data['version'] ?? (string) filemtime( $style_file )
 		);
-	}
-
-	/**
-	 * Build an absolute path inside the package build directory.
-	 *
-	 * @param string $relative_path Relative file path inside build.
-	 *
-	 * @return string
-	 */
-	protected function buildPath( string $relative_path ): string
-	{
-		return wp_normalize_path( $this->path . 'build/' . ltrim( $relative_path, '/' ) );
-	}
-
-	/**
-	 * Resolve a build file path into a public URL.
-	 *
-	 * @param string $relative_path Relative file path inside build.
-	 *
-	 * @return string
-	 */
-	protected function buildUrl( string $relative_path ): string
-	{
-		return $this->url . 'build/' . ltrim( $relative_path, '/' );
 	}
 
 	/**
 	 * Resolve script dependency metadata from WordPress build asset files.
 	 *
+	 * @param string $key Build asset key without the `.asset.php` suffix.
+	 *
 	 * @return array{dependencies: array<int, string>, version: string|null}
 	 */
-	protected function getScriptAssets(): array
+	protected function getAssetData( string $key ): array
 	{
-		$asset_candidates = [
-			$this->buildPath( 'index.asset.php' ),
-			$this->buildPath( 'index.assets.php' ),
-		];
+		$asset_file = $this->path . "build/{$key}.asset.php";
 
-		foreach ( $asset_candidates as $asset_file ) {
-			if ( ! is_file( $asset_file ) ) {
-				continue;
-			}
-
-			$asset = include $asset_file;
-
-			if ( ! is_array( $asset ) ) {
-				continue;
-			}
-
-			$dependencies = $asset['dependencies'] ?? [];
-			$version      = $asset['version'] ?? null;
-
+		if ( ! is_file( $asset_file ) ) {
 			return [
-				'dependencies' => is_array( $dependencies ) ? $dependencies : [],
-				'version'      => is_string( $version ) ? $version : null,
+				'dependencies' => [],
+				'version'      => null,
 			];
 		}
 
+		$asset = include $asset_file;
+
+		if ( ! is_array( $asset ) ) {
+			return [
+				'dependencies' => [],
+				'version'      => null,
+			];
+		}
+
+		$dependencies = $asset['dependencies'] ?? [];
+		$version      = $asset['version'] ?? null;
+
 		return [
-			'dependencies' => [],
-			'version'      => null,
+			'dependencies' => is_array( $dependencies ) ? $dependencies : [],
+			'version'      => is_string( $version ) ? $version : null,
 		];
 	}
 
 	/**
 	 * Register options for block presets.
-	 *
-	 * Internal format:
-	 * 'block/name' => [
-	 *   'My Label' => 'has-preset-my-label',
-	 *   'My Second Label' => 'has-preset-my-second-label',
-	 * ]
 	 *
 	 * @return void
 	 */
@@ -402,11 +236,6 @@ class BlockPresetClasses
 	/**
 	 * Normalize block presets into label => value map.
 	 *
-	 * Supports input entries in these formats:
-	 * - [ 'Label' => 'value' ]
-	 * - [ [ 'label' => 'Label', 'value' => 'value' ] ]
-	 * - [ 'my-value' ] (label inferred from value)
-	 *
 	 * @param array<int|string, mixed> $presets Input presets.
 	 *
 	 * @return array<string, string>
@@ -465,6 +294,7 @@ class BlockPresetClasses
 	 * Ensure preset name starts with has-preset-.
 	 *
 	 * @param string $name Preset name.
+	 *
 	 * @return string
 	 */
 	protected function presetName( string $name ): string
