@@ -66,5 +66,16 @@
             "composerjson": "composer-deps.json",
             "composerlock": "composer-deps.lock"
         }
+    },
+    "archive": {
+        "exclude": [
+            "*",
+            ".*",
+            "!/build/",
+            "!/build/**",
+            "!/inc/",
+            "!/inc/**",
+            "!/composer.json"
+        ]
     }
 }

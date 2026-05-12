@@ -13,6 +13,8 @@
 
 namespace Bmd\BlockPresetClasses;
 
+use Bmd\BlockPresetClasses\Bmd\GithubWpUpdater;
+
 /**
  * Service loader/locator class for the plugin.
  */
@@ -49,10 +51,8 @@ class ServiceLoader
 				$demo->mount();
 			}
 
-			$updater_class = 'Bmd\\BlockPresetClasses\\Bmd\\GithubWpUpdater';
-
-			if ( class_exists( $updater_class ) ) {
-				$updater = new $updater_class(
+			if ( class_exists( GithubWpUpdater::class ) ) {
+				$updater = new GithubWpUpdater(
 					$plugin_file,
 					[
 						'github.user'   => 'bob-moore',

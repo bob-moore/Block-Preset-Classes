@@ -27,14 +27,11 @@
 	"files": [
 		"plugin.php",
 		"build",
+		"assets",
 		"!build/*.map",
-		"vendor",
-		"!vendor/**/tests",
-		"!vendor/**/tests/**",
-		"!vendor/**/*.code-workspace",
-		"!vendor/**/phpcs.xml",
-		"!vendor/**/phpstan.neon",
-		"!vendor/**/phpunit.xml",
+		"vendor/autoload.php",
+		"vendor/composer",
+		"vendor/scoped",
 		"readme.txt",
 		"inc"
 	],
@@ -50,7 +47,7 @@
 		"@wordpress/element": "^6.37.0",
 		"@wordpress/hooks": "^4.37.0",
 		"@wordpress/icons": "^11.4.0",
-		"@wordpress/scripts": "^31.2.0",
+		"@wordpress/scripts": "^32.1.0",
 		"@wordpress/stylelint-config": "^23.29.0",
 		"mini-css-extract-plugin": "^2.9.4",
 		"react": "^18.3.1",
@@ -68,7 +65,7 @@
 		"lint:md:docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "wp-scripts plugin-zip",
+		"plugin-zip": "sh -c '[ -f vendor/scoped/autoload.php ] || { echo \"Missing vendor/scoped/autoload.php. Run composer run wpify:install first.\"; exit 1; }; composer dump-autoload --no-dev --optimize && wp-scripts plugin-zip --root-folder=block-preset-classes; status=$?; composer dump-autoload --optimize; exit $status'",
 		"start": "wp-scripts start --experimental-modules"
 	}
 }
