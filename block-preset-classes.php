@@ -17,6 +17,9 @@
  * Text Domain: block-preset-classes
  *
  * @package Bmd\BlockPresetClasses
+ * @author  Bob Moore
+ * @license GPL-2.0-or-later https://www.gnu.org/licenses/gpl-2.0.html
+ * @link    https://github.com/bob-moore/Block-Preset-Classes
  */
 
 namespace Bmd\BlockPresetClasses;
@@ -27,6 +30,8 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Load dependencies and mount the plugin after WordPress has loaded plugins.
+ *
+ * @throws \RuntimeException If Composer dependencies are missing.
  *
  * @return void
  */
@@ -57,7 +62,6 @@ function load_plugin(): void
 			]
 		);
 		$plugin->mount();
-
 	} catch ( \Throwable $e ) {
 		error_log( $e->getMessage() );
 	}

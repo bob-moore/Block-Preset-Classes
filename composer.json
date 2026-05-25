@@ -78,7 +78,7 @@
                 "readme.txt",
                 "LICENSE",
                 "license.txt",
-                "plugin.php"
+                "block-preset-classes.php"
             ],
             "exclude": [
                 "*.psd"
