@@ -81,6 +81,7 @@
                 "block-preset-classes.php"
             ],
             "exclude": [
+                "*.map",
                 "*.psd"
             ]
         },

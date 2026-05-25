@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 7.0
-Stable tag: 0.3.4
+Stable tag: 0.3.5
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -89,6 +89,12 @@ If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\
 
 == Changelog ==
 
+= 0.3.5 =
+
+* Renamed the plugin bootstrap file to `block-preset-classes.php`.
+* Scoped PHP linting to plugin source classes while preserving syntax checks for the bootstrap file.
+* Refreshed CI dependency installation metadata for the current package lock.
+
 = 0.3.4 =
 
 * Unified the PHP architecture around `Main`, `Controller`, provider, service, and utility classes under the `Bmd\BlockPresetClasses` namespace.
@@ -142,6 +148,10 @@ If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.5 =
+
+Renames the plugin bootstrap file and updates CI/release metadata.
 
 = 0.3.4 =
 

@@ -39,3 +39,4 @@ tests/**              export-ignore
 tsconfig.json         export-ignore
 webpack.config.js     export-ignore
 *.psd                 export-ignore
+*.map                 export-ignore

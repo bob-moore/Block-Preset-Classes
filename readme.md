@@ -11,7 +11,7 @@
 [![Lint JS](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-js.yml/badge.svg)](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-js.yml)
 [![Lint PHP](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-php.yml/badge.svg)](https://github.com/bob-moore/Block-Preset-Classes/actions/workflows/lint-php.yml)
 
-Want to give it a test drive? Try it in the WP Playground: [![Try it in the WordPress Playground](https://img.shields.io/badge/WP_Playground-v0.3.4-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
+Want to give it a test drive? Try it in the WP Playground: [![Try it in the WordPress Playground](https://img.shields.io/badge/WP_Playground-v0.3.5-blue?logo=wordpress&logoColor=%23fff&labelColor=%233858e9&color=%233858e9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bob-moore/Block-Preset-Classes/main/_playground/blueprint-github.json)
 
 Block styles are useful… until you need more than one.
 
@@ -239,6 +239,12 @@ This hook runs after the REST data has loaded, so you can adjust options based o
 This plugin is distributed through GitHub releases (not WordPress.org). The plugin includes a scoped GitHub updater so WordPress can detect and apply new versions from this repository.
 
 ## Changelog
+
+### 0.3.5
+
+- Renamed the plugin bootstrap file to `block-preset-classes.php`.
+- Scoped PHP linting to plugin source classes while preserving syntax checks for the bootstrap file.
+- Refreshed CI dependency installation metadata for the current package lock.
 
 ### 0.3.4
 
