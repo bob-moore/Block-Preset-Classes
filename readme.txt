@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 7.0
-Stable tag: 0.3.5
+Stable tag: 0.3.6
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -89,6 +89,10 @@ If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\
 
 == Changelog ==
 
+= 0.3.6 =
+
+* Restored demo preset loading in WordPress Playground and development environments.
+
 = 0.3.5 =
 
 * Renamed the plugin bootstrap file to `block-preset-classes.php`.
@@ -148,6 +152,10 @@ If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\
 * Added JS filter support for runtime option mutations.
 
 == Upgrade Notice ==
+
+= 0.3.6 =
+
+Restores demo preset loading in WordPress Playground.
 
 = 0.3.5 =
 

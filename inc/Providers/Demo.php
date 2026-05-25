@@ -47,8 +47,22 @@ class Demo extends Module
 	 */
 	public function shouldLoad(): bool
 	{
-		return 'local' === wp_get_environment_type()
-			|| ( defined( 'IS_PLAYGROUND' ) && (bool) constant( 'IS_PLAYGROUND' ) );
+		if ( in_array( wp_get_environment_type(), [ 'local', 'development' ], true ) ) {
+			return true;
+		}
+
+		foreach ( [ 'IS_PLAYGROUND', 'WP_IS_PLAYGROUND', 'WORDPRESS_PLAYGROUND' ] as $constant ) {
+			if ( defined( $constant ) && (bool) constant( $constant ) ) {
+				return true;
+			}
+		}
+
+		$host = sanitize_text_field(
+			wp_unslash( $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? '' )
+		);
+		$host = strtolower( $host );
+
+		return str_contains( $host, 'playground.wordpress.net' );
 	}
 
 	/**

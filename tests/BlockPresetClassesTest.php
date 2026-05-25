@@ -39,6 +39,7 @@ class BlockPresetClassesTest extends TestCase
 	 */
 	protected function tearDown(): void
 	{
+		unset( $GLOBALS['wp_environment_type'], $_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME'] );
 		WP_Mock::tearDown();
 		parent::tearDown();
 	}
@@ -147,5 +148,29 @@ class BlockPresetClassesTest extends TestCase
 			],
 			$response->get_data()
 		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function demo_presets_load_in_development_environments(): void
+	{
+		$GLOBALS['wp_environment_type'] = 'development';
+
+		$demo = new Providers\Demo();
+
+		$this->assertTrue( $demo->shouldLoad() );
+	}
+
+	/**
+	 * @test
+	 */
+	public function demo_presets_load_on_playground_hosts(): void
+	{
+		$_SERVER['HTTP_HOST'] = 'playground.wordpress.net';
+
+		$demo = new Providers\Demo();
+
+		$this->assertTrue( $demo->shouldLoad() );
 	}
 }

@@ -59,6 +59,24 @@ if ( ! function_exists( 'wp_normalize_path' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wp_unslash' ) ) {
+	function wp_unslash( $value ) {
+		return is_array( $value ) ? array_map( 'wp_unslash', $value ) : stripslashes( (string) $value );
+	}
+}
+
+if ( ! function_exists( 'sanitize_text_field' ) ) {
+	function sanitize_text_field( $value ) {
+		return trim( strip_tags( (string) $value ) );
+	}
+}
+
+if ( ! function_exists( 'wp_get_environment_type' ) ) {
+	function wp_get_environment_type() {
+		return $GLOBALS['wp_environment_type'] ?? 'production';
+	}
+}
+
 if ( ! function_exists( 'sanitize_title' ) ) {
 	function sanitize_title( $title ) {
 		$title = strtolower( (string) $title );

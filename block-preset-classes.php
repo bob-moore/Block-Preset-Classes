@@ -6,7 +6,7 @@
  * Plugin Name: Block Preset Classes
  * Plugin URI:  https://github.com/bob-moore/Block-Preset-Classes
  * Description: Adds configurable preset classes to Gutenberg blocks.
- * Version:     0.3.5
+ * Version:     0.3.6
  * Author:      Bob Moore
  * Author URI:  https://www.bobmoore.dev
  * Requires at least: 6.7
@@ -56,7 +56,7 @@ function load_plugin(): void
 		$plugin = new Main(
 			[
 				'package' => 'block_preset_classes',
-				'version' => '0.3.5',
+				'version' => '0.3.6',
 				'path'    => plugin_dir_path( __FILE__ ),
 				'url'     => plugin_dir_url( __FILE__ ),
 			]
