@@ -1,15 +1,21 @@
 {
+    "$schema": "https://schemas.wp.org/trunk/wp-env.json",
     "core": null,
-    "mappings": {
-        "wp-content/plugins/block-preset-classes": "./"
-    },
+    "plugins": [
+        ".",
+        "https://downloads.wordpress.org/plugin/query-monitor.latest-stable.zip"
+    ],
     "config": {
         "WP_DEBUG": true,
         "WP_DEBUG_LOG": "wp-content/plugins/block-preset-classes/debug.log",
         "WP_DEBUG_DISPLAY": false,
-        "SCRIPT_DEBUG": false,
-        "WP_DEVELOPMENT_MODE": "theme",
+        "SCRIPT_DEBUG": true,
+        "WP_DEVELOPMENT_MODE": "plugin",
         "WP_ENVIRONMENT_TYPE": "local",
-        "WP_CACHE": false
+        "WP_CACHE": false,
+        "IS_PLAYGROUND": true
+    },
+    "lifecycleScripts": {
+        "afterStart": "wp-env run cli wp option update blogname 'Block Preset Classes' && wp-env run cli wp rewrite structure '/%postname%/' --hard"
     }
 }

@@ -7,36 +7,17 @@
 
 namespace Bmd\BlockPresetClasses\Tests;
 
+use Bmd\BlockPresetClasses\Providers;
+use Bmd\BlockPresetClasses\Services;
 use PHPUnit\Framework\TestCase;
 use WP_Mock;
 use WP_REST_Request;
 
 /**
- * Test helper exposing protected Plugin members.
- */
-class TestablePlugin extends \Bmd\BlockPresetClasses\Plugin
-{
-	public function publicUrl(): string
-	{
-		return $this->url;
-	}
-
-	public function publicPath(): string
-	{
-		return $this->path;
-	}
-
-	/**
-	 * @return array<string, array<string, string>>
-	 */
-	public function publicBlockPresets(): array
-	{
-		return $this->block_presets;
-	}
-}
-
-/**
- * @covers \Bmd\BlockPresetClasses\Plugin
+ * @covers \Bmd\BlockPresetClasses\Providers\Presets
+ * @covers \Bmd\BlockPresetClasses\Providers\RestApi
+ * @covers \Bmd\BlockPresetClasses\Services\FilePathResolver
+ * @covers \Bmd\BlockPresetClasses\Services\UrlResolver
  */
 class BlockPresetClassesTest extends TestCase
 {
@@ -65,104 +46,36 @@ class BlockPresetClassesTest extends TestCase
 	/**
 	 * @test
 	 */
-	public function constructor_sets_url_and_path(): void
+	public function file_path_resolver_resolves_relative_paths(): void
 	{
-		$plugin = new TestablePlugin(
-			'https://example.test/wp-content/plugins/block-preset-classes',
-			'/var/www/html/wp-content/plugins/block-preset-classes'
-		);
+		$resolver = new Services\FilePathResolver( '/var/www/plugin/' );
 
-		$this->assertSame( 'https://example.test/wp-content/plugins/block-preset-classes/', $plugin->publicUrl() );
-		$this->assertSame( '/var/www/html/wp-content/plugins/block-preset-classes/', $plugin->publicPath() );
+		$this->assertSame( '/var/www/plugin', $resolver->resolve() );
+		$this->assertSame( '/var/www/plugin/build/index.js', $resolver->resolve( '/build/index.js' ) );
 	}
 
 	/**
 	 * @test
 	 */
-	public function constructor_infers_url_and_path_when_not_provided(): void
+	public function url_resolver_resolves_relative_urls(): void
 	{
-		$plugin = new TestablePlugin();
+		$resolver = new Services\UrlResolver( 'https://example.test/plugin/' );
 
-		$this->assertSame( 'https://example.test/' . basename( dirname( __DIR__ ) ) . '/', $plugin->publicUrl() );
-		$this->assertSame( trailingslashit( dirname( __DIR__ ) ), $plugin->publicPath() );
+		$this->assertSame( 'https://example.test/plugin', $resolver->resolve() );
+		$this->assertSame( 'https://example.test/plugin/build/index.js', $resolver->resolve( '/build/index.js' ) );
 	}
 
 	/**
 	 * @test
 	 */
-	public function mount_registers_expected_wordpress_hooks(): void
+	public function presets_normalize_filtered_block_preset_maps(): void
 	{
-		$plugin = new \Bmd\BlockPresetClasses\Plugin( 'https://example.test/plugin/', '/var/www/plugin/' );
+		$presets = new Providers\Presets();
+		$presets->setPackage( 'block-preset-classes' );
 
-		WP_Mock::expectActionAdded( 'enqueue_block_editor_assets', [ $plugin, 'enqueueEditorAssets' ] );
-		WP_Mock::expectActionAdded( 'rest_api_init', [ $plugin, 'registerRestRoute' ] );
-
-		$plugin->mount();
-
-		$this->addToAssertionCount( 2 );
-	}
-
-	/**
-	 * @test
-	 */
-	public function enqueue_editor_script_returns_without_script_file(): void
-	{
-		$temporary_root = $this->createTemporaryPluginRoot( false );
-		$plugin         = new \Bmd\BlockPresetClasses\Plugin( 'https://example.test/plugin/', $temporary_root );
-
-		WP_Mock::userFunction( 'wp_enqueue_script', [ 'times' => 0 ] );
-		WP_Mock::userFunction( 'wp_enqueue_style', [ 'times' => 0 ] );
-
-		$plugin->enqueueEditorAssets();
-
-		$this->addToAssertionCount( 1 );
-	}
-
-	/**
-	 * @test
-	 */
-	public function enqueue_editor_script_enqueues_script_and_style_when_assets_exist(): void
-	{
-		$temporary_root = $this->createTemporaryPluginRoot();
-		$plugin         = new \Bmd\BlockPresetClasses\Plugin( 'https://example.test/plugin/', $temporary_root );
-
-		WP_Mock::userFunction(
-			'wp_enqueue_script',
-			[
-				'args'  => [
-					'bmd-block-preset-classes-editor',
-					'https://example.test/plugin/build/index.js',
-					[ 'wp-element' ],
-					'abc123',
-					true,
-				],
-				'times' => 1,
-			]
-		);
-		WP_Mock::userFunction(
-			'wp_enqueue_style',
-			[
-				'args'  => [
-					'bmd-block-preset-classes-editor',
-					'https://example.test/plugin/build/index.css',
-					[],
-					'abc123',
-				],
-				'times' => 1,
-			]
-		);
-
-		$plugin->enqueueEditorAssets();
-
-		$this->addToAssertionCount( 2 );
-	}
-
-	/**
-	 * @test
-	 */
-	public function register_options_normalizes_filtered_block_presets(): void
-	{
-		$plugin = new TestablePlugin( 'https://example.test/plugin/', '/var/www/plugin/' );
+		WP_Mock::onFilter( 'block_preset_classes_presets' )
+			->with( [] )
+			->reply( [] );
 
 		WP_Mock::onFilter( 'block_preset_classes' )
 			->with( [] )
@@ -182,8 +95,6 @@ class BlockPresetClassesTest extends TestCase
 				]
 			);
 
-		$plugin->registerOptions();
-
 		$this->assertSame(
 			[
 				'core/group'     => [
@@ -194,61 +105,23 @@ class BlockPresetClassesTest extends TestCase
 					'eyebrow text' => 'has-preset-eyebrow-text',
 				],
 			],
-			$plugin->publicBlockPresets()
+			$presets->getBlockPresets()
 		);
 	}
 
 	/**
 	 * @test
 	 */
-	public function add_block_preset_adds_sanitized_preset_to_block(): void
+	public function rest_endpoint_returns_registered_presets_as_lists(): void
 	{
-		$plugin = new TestablePlugin( 'https://example.test/plugin/', '/var/www/plugin/' );
+		$presets = new Providers\Presets();
+		$presets->setPackage( 'block-preset-classes' );
 
-		$plugin->addBlockPreset( 'core/group', 'Hero Panel' );
-		$plugin->addBlockPreset( 'core/group', 'Muted Card', 'muted-card' );
+		$rest = new Providers\RestApi( $presets );
 
-		$this->assertSame(
-			[
-				'core/group' => [
-					'Hero Panel' => 'has-preset-hero-panel',
-					'Muted Card' => 'has-preset-muted-card',
-				],
-			],
-			$plugin->publicBlockPresets()
-		);
-	}
-
-	/**
-	 * @test
-	 */
-	public function register_rest_route_registers_classes_endpoint(): void
-	{
-		$plugin = new \Bmd\BlockPresetClasses\Plugin( 'https://example.test/plugin/', '/var/www/plugin/' );
-
-		WP_Mock::userFunction(
-			'register_rest_route',
-			[
-				'args'  => [
-					'block-preset-classes/v2',
-					'/all',
-					WP_Mock\Functions::type( 'array' ),
-				],
-				'times' => 1,
-			]
-		);
-
-		$plugin->registerRestRoute();
-
-		$this->addToAssertionCount( 1 );
-	}
-
-	/**
-	 * @test
-	 */
-	public function get_block_classes_returns_rest_response_with_registered_presets(): void
-	{
-		$plugin = new \Bmd\BlockPresetClasses\Plugin( 'https://example.test/plugin/', '/var/www/plugin/' );
+		WP_Mock::onFilter( 'block_preset_classes_presets' )
+			->with( [] )
+			->reply( [] );
 
 		WP_Mock::onFilter( 'block_preset_classes' )
 			->with( [] )
@@ -260,7 +133,7 @@ class BlockPresetClassesTest extends TestCase
 				]
 			);
 
-		$response = $plugin->getBlockClasses( new WP_REST_Request() );
+		$response = $rest->getBlockClasses( new WP_REST_Request() );
 
 		$this->assertSame( 200, $response->get_status() );
 		$this->assertSame(
@@ -274,30 +147,5 @@ class BlockPresetClassesTest extends TestCase
 			],
 			$response->get_data()
 		);
-	}
-
-	/**
-	 * Create a temporary plugin root with optional build assets.
-	 *
-	 * @param bool $with_assets Whether to create editor assets.
-	 *
-	 * @return string
-	 */
-	private function createTemporaryPluginRoot( bool $with_assets = true ): string
-	{
-		$root = trailingslashit( sys_get_temp_dir() ) . 'bpc-tests-' . uniqid( '', true ) . '/';
-
-		mkdir( $root . 'build', 0777, true );
-
-		if ( $with_assets ) {
-			file_put_contents( $root . 'build/index.js', 'console.log("test");' );
-			file_put_contents( $root . 'build/index.css', '.test {}' );
-			file_put_contents(
-				$root . 'build/index.asset.php',
-				"<?php\nreturn [ 'dependencies' => [ 'wp-element' ], 'version' => 'abc123' ];\n"
-			);
-		}
-
-		return $root;
 	}
 }

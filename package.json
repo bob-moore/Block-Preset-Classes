@@ -60,12 +60,12 @@
 	"scripts": {
 		"build": "wp-scripts build --experimental-modules",
 		"format": "wp-scripts format",
-		"lint:css": "wp-scripts lint-style",
-		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style './src/**/*.scss'",
+		"lint:js": "wp-scripts lint-js './src/**/*.ts' './src/**/*.tsx'",
 		"lint:md:docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "sh -c '[ -f vendor/scoped/autoload.php ] || { echo \"Missing vendor/scoped/autoload.php. Run composer run wpify:install first.\"; exit 1; }; composer dump-autoload --no-dev --optimize && wp-scripts plugin-zip --root-folder=block-preset-classes; status=$?; composer dump-autoload --optimize; exit $status'",
+		"plugin-zip": "wp-scripts plugin-zip --root-folder=block-preset-classes",
 		"start": "wp-scripts start --experimental-modules"
 	}
 }
