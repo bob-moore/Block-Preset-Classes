@@ -57,23 +57,120 @@ If you are embedding this into your own project:
 composer require bmd/block-preset-classes
 ```
 
-Then bootstrap:
+If your project is not already using PHP-DI, bootstrap the plugin with `Main`:
 
 ```php
-use Bmd\BlockPresetClasses\Plugin;
+use Bmd\BlockPresetClasses\Main;
 
 $dependency_url  = plugin_dir_url( __FILE__ ) . 'vendor/bmd/block-preset-classes/';
 $dependency_path = plugin_dir_path( __FILE__ ) . 'vendor/bmd/block-preset-classes/';
 
-$plugin = new Plugin(
-	$dependency_url,
-	$dependency_path
+$plugin = new Main(
+	[
+		'package' => 'block_preset_classes',
+		'path'    => $dependency_path,
+		'url'     => $dependency_url,
+	]
 );
 
 $plugin->mount();
 ```
 
-The `Plugin` constructor expects the URL and filesystem path to the Block Preset Classes dependency root, not the file where you call it. For example, pass `/path/to/vendor/bmd/block-preset-classes/` and the matching public URL for that directory.
+The `path` and `url` config values should point to the Block Preset Classes dependency root, not the file where you call it. For example, pass `/path/to/vendor/bmd/block-preset-classes/` and the matching public URL for that directory.
+
+### Using an Existing PHP-DI Container
+
+If your parent plugin already uses PHP-DI, you can skip `Main` and load Block Preset Classes into the parent container. This keeps one application container and lets the parent controller initialize this package's controller alongside its own services.
+
+Add the package definitions to your parent definitions file and override the package-relative path and URL resolvers:
+
+```php
+<?php
+
+namespace Acme\Example;
+
+use Bmd\BlockPresetClasses\Controller as BlockPresetClassesController;
+use Bmd\BlockPresetClasses\Services\FilePathResolver;
+use Bmd\BlockPresetClasses\Services\UrlResolver;
+use function DI\autowire;
+use function DI\string;
+
+$block_preset_definitions = require __DIR__ . '/../vendor/bmd/block-preset-classes/inc/definitions.php';
+
+return array_merge(
+	$block_preset_definitions,
+	[
+		'package' => 'acme_example',
+		'path'    => ACME_EXAMPLE_PATH,
+		'url'     => ACME_EXAMPLE_URL,
+
+		FilePathResolver::class => autowire()
+			->constructorParameter(
+				'path',
+				string( '{path}vendor/bmd/block-preset-classes/' )
+			),
+
+		UrlResolver::class => autowire()
+			->constructorParameter(
+				'url',
+				string( '{url}vendor/bmd/block-preset-classes/' )
+			),
+	]
+);
+```
+
+Then resolve this package's controller from your parent container:
+
+```php
+use Bmd\BlockPresetClasses\Controller as BlockPresetClassesController;
+
+$container->get( BlockPresetClassesController::class );
+```
+
+If your build scopes Composer dependencies, adjust the namespace and path to match the scoped location, for example `Vendor\Plugin\Bmd\BlockPresetClasses` and `vendor/scoped/bmd/block-preset-classes/`.
+
+### Simple Non-PHP-DI Bootstraps
+
+For a plugin that only wants to load Block Preset Classes as a Composer dependency, let `Main` manage its own internal container:
+
+```php
+<?php
+
+use Bmd\BlockPresetClasses\Main;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+add_action(
+	'plugins_loaded',
+	static function (): void {
+		$plugin = new Main(
+			[
+				'package' => 'block_preset_classes',
+				'path'    => plugin_dir_path( __FILE__ ) . 'vendor/bmd/block-preset-classes/',
+				'url'     => plugin_dir_url( __FILE__ ) . 'vendor/bmd/block-preset-classes/',
+			]
+		);
+
+		$plugin->mount();
+	}
+);
+```
+
+For a theme-embedded dependency, use the theme path and URI instead:
+
+```php
+use Bmd\BlockPresetClasses\Main;
+
+$plugin = new Main(
+	[
+		'package' => 'block_preset_classes',
+		'path'    => get_theme_file_path( 'vendor/bmd/block-preset-classes/' ),
+		'url'     => get_theme_file_uri( 'vendor/bmd/block-preset-classes/' ),
+	]
+);
+
+$plugin->mount();
+```
 
 ## Usage
 
@@ -145,7 +242,7 @@ This plugin is distributed through GitHub releases (not WordPress.org). The plug
 
 ### 0.3.4
 
-- Unified the PHP architecture around `ServiceLoader`, `Plugin`, `Demo`, and `Utilities` classes under the `Bmd\\BlockPresetClasses` namespace.
+- Unified the PHP architecture around `Main`, `Controller`, provider, service, and utility classes under the `Bmd\\BlockPresetClasses` namespace.
 - Simplified editor asset loading to match the related plugins' enqueue and asset-resolution patterns.
 - Split GitHub Actions into dedicated CSS, JS, and PHP workflows and aligned package lint scripts with the other plugins.
 - Updated README and release metadata to match the shared plugin structure.

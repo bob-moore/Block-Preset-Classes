@@ -135,8 +135,8 @@ export const Edit = createHigherOrderComponent<
 				<BlockEdit { ...props } />
 
 				{ isSelected && (
-					<InspectorControls>
-						<PanelBody title="Block Presets" initialOpen={ false }>
+					<InspectorControls group="styles">
+						<PanelBody title="Presets" initialOpen={ true }>
 							{ presetOptions.length > MAX_BUTTON_OPTIONS ? (
 								<div className={ styles[ 'select-container' ] }>
 									<Select

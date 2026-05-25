@@ -73,19 +73,25 @@ Yes. Use the `bmd.blockPresets.classOptions` filter. It receives:
 
 = Can I use this as a Composer dependency? =
 
-Yes. Require the package, then instantiate `Bmd\BlockPresetClasses\Plugin` and call `mount()`:
+Yes. Require the package, then instantiate `Bmd\BlockPresetClasses\Main` and call `mount()`:
 
-`use Bmd\BlockPresetClasses\Plugin;`
-`$plugin = new Plugin();`
+`use Bmd\BlockPresetClasses\Main;`
+`$plugin = new Main( [ 'package' => 'block_preset_classes', 'path' => $path, 'url' => $url ] );`
 `$plugin->mount();`
 
-If your package layout needs explicit values, the constructor still accepts the package URL and absolute package path.
+Set `path` and `url` to the Block Preset Classes package root.
+
+= Can I use this inside an existing PHP-DI container? =
+
+Yes. If your parent plugin already uses PHP-DI, require this package's `inc/definitions.php`, merge those definitions into your parent definitions, override `Bmd\BlockPresetClasses\Services\FilePathResolver` and `Bmd\BlockPresetClasses\Services\UrlResolver` so they point at the dependency root, then resolve `Bmd\BlockPresetClasses\Controller` from the parent container. In that setup, skip `Bmd\BlockPresetClasses\Main` so there is only one container.
+
+If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\Main` and call `mount()`.
 
 == Changelog ==
 
 = 0.3.4 =
 
-* Unified the PHP architecture around `ServiceLoader`, `Plugin`, `Demo`, and `Utilities` classes under the `Bmd\BlockPresetClasses` namespace.
+* Unified the PHP architecture around `Main`, `Controller`, provider, service, and utility classes under the `Bmd\BlockPresetClasses` namespace.
 * Simplified editor asset loading to match the related plugins' enqueue and asset-resolution patterns.
 * Split GitHub Actions into dedicated CSS, JS, and PHP workflows and aligned package lint scripts with the other plugins.
 * Updated README and release metadata to match the shared plugin structure.

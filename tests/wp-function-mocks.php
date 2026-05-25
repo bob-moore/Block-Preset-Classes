@@ -68,6 +68,14 @@ if ( ! function_exists( 'sanitize_title' ) ) {
 	}
 }
 
+if ( ! function_exists( 'sanitize_key' ) ) {
+	function sanitize_key( $key ) {
+		$key = strtolower( (string) $key );
+
+		return preg_replace( '/[^a-z0-9_\-]/', '', $key );
+	}
+}
+
 if ( ! class_exists( 'WP_Block_Type_Registry' ) ) {
 	class WP_Block_Type_Registry {
 		private static ?WP_Block_Type_Registry $instance = null;

@@ -34,7 +34,9 @@
             "Bmd\\BlockPresetClasses\\Tests\\": "./tests"
         }
     },
-    "require": {},
+    "require": {
+        "php-di/php-di": "^7.1"
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
         "symfony/var-dumper": "*",
@@ -46,6 +48,8 @@
         "10up/wp_mock": "^1.0"
     },
     "scripts": {
+        "build-release": "node scripts/build-plugin-release.mjs",
+        "build-release:docker": "scripts/build-plugin-release-docker.sh",
         "phpstan": "./vendor/bin/phpstan analyze -c ./phpstan.neon --memory-limit=2048M",
         "phpsniff": "./vendor/bin/phpcs ./inc -v --standard='./phpcs.xml'",
         "phpsniff:fix": "./vendor/bin/phpcbf ./inc -v --standard='./phpcs.xml'",
@@ -56,15 +60,40 @@
         "wpify:install": "wpify-scoper install",
         "wpify:update": "wpify-scoper update",
         "wpify-scoper": "wpify-scoper",
-        "phpunit": "./vendor/bin/phpunit"
+        "phpunit": "./vendor/bin/phpunit",
+        "test": [
+            "@phpstan",
+            "@phpsniff",
+            "@phpunit"
+        ]
     },
     "extra": {
+        "plugin-release": {
+            "files": [
+                "assets",
+                "build",
+                "inc",
+                "README.md",
+                "readme.md",
+                "readme.txt",
+                "LICENSE",
+                "license.txt",
+                "block-preset-classes.php"
+            ],
+            "exclude": [
+                "*.psd"
+            ]
+        },
         "wpify-scoper": {
             "prefix": "Bmd\\BlockPresetClasses",
-            "slug": "block-preset-classes",
+            "slug": "block_preset_classes",
             "folder": "./vendor/scoped",
             "composerjson": "composer-deps.json",
-            "composerlock": "composer-deps.lock"
+            "composerlock": "composer-deps.lock",
+            "autorun": false,
+            "source-namespace-patches": [
+                "DI\\"
+            ]
         }
     },
     "archive": {

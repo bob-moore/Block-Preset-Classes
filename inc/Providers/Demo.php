@@ -1,37 +1,22 @@
 <?php
 /**
- * Playground demo presets.
+ * Playground demo provider.
  *
- * PHP Version 8.2
- *
- * @package    Bmd\BlockPresetClasses
- * @author     Bob Moore <bob@bobmoore.dev>
- * @license    GPL-2.0+ <http://www.gnu.org/licenses/gpl-2.0.txt>
- * @link       https://www.bobmoore.dev
- * @since      0.3.0
+ * @package Bmd\BlockPresetClasses
+ * @author  Bob Moore <bob@bobmoore.dev>
+ * @license GPL-2.0-or-later https://www.gnu.org/licenses/gpl-2.0.html
+ * @link    https://github.com/bob-moore/Block-Preset-Classes
  */
 
-namespace Bmd\BlockPresetClasses;
+namespace Bmd\BlockPresetClasses\Providers;
+
+use Bmd\BlockPresetClasses\Module;
 
 /**
- * Registers sample presets and styles for the WordPress Playground demo.
+ * Registers sample presets and styles for local/Playground demos.
  */
-class Demo
+class Demo extends Module
 {
-	/**
-	 * URL of this plugin/package.
-	 *
-	 * @var string
-	 */
-	protected string $url;
-
-	/**
-	 * Path of this plugin/package.
-	 *
-	 * @var string
-	 */
-	protected string $path;
-
 	/**
 	 * Demo preset options.
 	 *
@@ -56,50 +41,14 @@ class Demo
 	];
 
 	/**
-	 * Constructor.
+	 * Determine whether demo presets should be loaded.
 	 *
-	 * @param string $url  URL to the plugin directory.
-	 * @param string $path Absolute path to the plugin directory.
+	 * @return bool
 	 */
-	public function __construct( string $url = '', string $path = '' )
+	public function shouldLoad(): bool
 	{
-		$this->setUrl( ! empty( $url ) ? esc_url_raw( $url ) : Utilities::getUrl() );
-		$this->setPath( ! empty( $path ) ? esc_html( $path ) : Utilities::getPath() );
-	}
-
-	/**
-	 * Set the plugin root URL.
-	 *
-	 * @param string $url URL to the plugin root.
-	 *
-	 * @return void
-	 */
-	public function setUrl( string $url ): void
-	{
-		$this->url = trailingslashit( $url );
-	}
-
-	/**
-	 * Set the plugin root path.
-	 *
-	 * @param string $path Absolute path to the plugin root.
-	 *
-	 * @return void
-	 */
-	public function setPath( string $path ): void
-	{
-		$this->path = trailingslashit( wp_normalize_path( $path ) );
-	}
-
-	/**
-	 * Mount demo hooks.
-	 *
-	 * @return void
-	 */
-	public function mount(): void
-	{
-		add_filter( 'block_preset_classes', [ $this, 'registerDemoPresets' ] );
-		add_action( 'enqueue_block_assets', [ $this, 'enqueueDemoStyles' ] );
+		return 'local' === wp_get_environment_type()
+			|| ( defined( 'IS_PLAYGROUND' ) && (bool) constant( 'IS_PLAYGROUND' ) );
 	}
 
 	/**
