@@ -93,7 +93,8 @@
             "composerlock": "composer-deps.lock",
             "autorun": false,
             "source-namespace-patches": [
-                "DI\\"
+                "DI\\",
+                "Bmd\\GithubWpUpdater"
             ]
         }
     },

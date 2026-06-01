@@ -3,7 +3,7 @@ Contributors: Bob Moore
 Tags: gutenberg, block editor, classes, utility classes, blocks
 Requires at least: 6.7
 Tested up to: 7.0
-Stable tag: 0.3.6
+Stable tag: 0.3.7
 Requires PHP: 8.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -88,6 +88,10 @@ Yes. If your parent plugin already uses PHP-DI, require this package's `inc/defi
 If your parent project does not use PHP-DI, instantiate `Bmd\BlockPresetClasses\Main` and call `mount()`.
 
 == Changelog ==
+
+= 0.3.7 =
+
+* Fixed scoped dependency configuration so standalone ZIP installs can run alongside related plugins.
 
 = 0.3.6 =
 

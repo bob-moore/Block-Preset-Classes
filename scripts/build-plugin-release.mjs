@@ -66,6 +66,7 @@ function main() {
 	copyDistributableFiles();
 	writeReleaseComposerDepsJson();
 	writeReleaseComposerJson();
+	copyScoperCustomConfig();
 
 	runWpifyScoper();
 	patchPluginSourceForScopedRuntime();
@@ -177,6 +178,13 @@ function writeReleaseComposerJson() {
 	writeJson( path.join( stagingDir, 'composer.json' ), releaseComposer );
 }
 
+function copyScoperCustomConfig() {
+	const src = path.join( rootDir, 'scoper.custom.php' );
+	if ( fs.existsSync( src ) ) {
+		fs.copyFileSync( src, path.join( stagingDir, 'scoper.custom.php' ) );
+	}
+}
+
 function runWpifyScoper() {
 	// Full install: resolves deps, locks them, and wpify/scoper autorun creates vendor/scoped.
 	run( composerCommand.command, [
@@ -205,6 +213,7 @@ function runWpifyScoper() {
 
 function patchPluginSourceForScopedRuntime() {
 	patchPhpNamespaceReferences( path.join( stagingDir, 'inc' ) );
+	patchPhpNamespaceReferences( path.join( stagingDir, `${ pluginFolder }.php` ) );
 }
 
 function patchPhpNamespaceReferences( directory ) {
@@ -386,7 +395,7 @@ function removeBuildOnlyFiles() {
 	writeJson( composerJsonPath, releaseComposerJson );
 
 	// Remove build-only files not needed in the distribution.
-	for ( const relativePath of [ 'composer-deps.json', 'composer-deps.lock', 'composer.json', 'composer.lock' ] ) {
+	for ( const relativePath of [ 'composer-deps.json', 'composer-deps.lock', 'composer.json', 'composer.lock', 'scoper.custom.php' ] ) {
 		fs.rmSync( path.join( stagingDir, relativePath ), { force: true } );
 	}
 }
@@ -442,6 +451,10 @@ function run( command, args, { label, cwd, env } = {} ) {
 function listFiles( directory ) {
 	if ( ! fs.existsSync( directory ) ) {
 		return [];
+	}
+
+	if ( fs.statSync( directory ).isFile() ) {
+		return [ directory ];
 	}
 
 	return fs.readdirSync( directory, { withFileTypes: true } ).flatMap(
